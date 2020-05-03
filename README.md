@@ -14,6 +14,9 @@
 - Dostarczanie statystyk odnośnie ogółu ulubionych piosenek
 - Zapisywanie preferencji
 
+## Stack
+- https://ant.design/components/steps/
+
 ## Zasady Matiego
 - working branch
 - code review
