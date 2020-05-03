@@ -16,8 +16,3 @@
 
 ## Stack
 - https://ant.design/components/steps/
-
-## Zasady Matiego
-- working branch
-- code review
-- nie więcej niż 20 linijek css w JSie
