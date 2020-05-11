@@ -1,12 +1,16 @@
 package pwr.piisw.spotifylyrics
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
-@RestController("/api")
-class Rest {
+@RestController
+class Rest(val userRepository: UserRepository) {
 
-    @GetMapping("/hello")
-    fun greetings(): String = "Hejka!"
+    @PostMapping("/user")
+    fun addUser(@RequestBody username: String) = userRepository.save(User(username = username))
 
+    @GetMapping("/user")
+    fun getAllUsers(): MutableList<User> = userRepository.findAll()
+
+    @GetMapping("/user/{username}")
+    fun getByUsername(@RequestParam("username") username: String) = userRepository.findByUsername(username)
 }
