@@ -9,7 +9,7 @@
     "tslint": "tslint -p . -c tslint.json"
   },
   "dependencies": {
-    "antd": "^4.2.0",
+    "antd": "^4.3.1",
     "next": "9.3.6",
     "prettier": "^2.0.5",
     "react": "16.13.1",
