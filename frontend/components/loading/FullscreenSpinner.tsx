@@ -4,7 +4,6 @@ import { LoadingOutlined } from '@ant-design/icons';
 type Props = { size?: number };
 const FullscreenSpinner = ({ size }: Props) => {
   const spinnerSize = size || 128;
-  console.log(spinnerSize);
   return (
     <Spin
       indicator={
