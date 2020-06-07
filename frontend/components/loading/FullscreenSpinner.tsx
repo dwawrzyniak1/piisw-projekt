@@ -3,19 +3,19 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 type Props = { size?: number };
 const FullscreenSpinner = ({ size }: Props) => {
-  const SPINNER_SIZE = size | 128;
-
+  const spinnerSize = size || 128;
+  console.log(spinnerSize);
   return (
     <Spin
       indicator={
         <LoadingOutlined
           style={{
-            fontSize: SPINNER_SIZE,
+            fontSize: spinnerSize,
             position: 'absolute',
             left: '50%',
-            marginLeft: -(SPINNER_SIZE / 2),
+            marginLeft: -(spinnerSize / 2),
             bottom: '50%',
-            marginBottom: -(SPINNER_SIZE / 4), // Exact center is not good because of bar at the top
+            marginBottom: -(spinnerSize / 4), // Exact center is not good because of bar at the top
           }}
           spin
         />
