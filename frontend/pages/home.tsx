@@ -6,9 +6,9 @@ import {
 import { useEffect, useState } from 'react';
 
 const Home: React.FC = () => {
-  const [token, setToken] = useState('');
-  const [tokenType, setTokenType] = useState('');
-  const [tokenExpirationTime, setTokenExpirationTime] = useState(null);
+  const [token, setToken] = useState<string>('');
+  const [tokenType, setTokenType] = useState<string>('');
+  const [tokenExpirationTime, setTokenExpirationTime] = useState<number>(null);
 
   useEffect(() => {
     setToken(getAccessToken());

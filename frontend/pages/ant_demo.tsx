@@ -17,7 +17,7 @@ const inFileStyle: CSS.Properties = {
 };
 
 const AntTest: React.FC = () => {
-  const [showMessage, setShowMessage] = useState(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   return (
     <div>
