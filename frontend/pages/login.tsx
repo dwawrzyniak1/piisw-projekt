@@ -1,8 +1,11 @@
 import Router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { AUTH_ENDPOINT, CLIENT_ID } from '../constants/spotify';
 import { APP_HOME_URL, APP_BASE_URL, APP_LOGIN_URL } from '../constants/urls';
+import { extractAuthDataFromUrl } from '../utils/url';
+import { saveToLocalStorage, getAccessToken } from '../utils/localStorage';
+import FullscreenSpinner from '../components/loading/FullscreenSpinner';
 
 const Login: React.FC = () => {
   const accessScopes = [
@@ -25,15 +28,15 @@ const Login: React.FC = () => {
     if (Router.query.error !== undefined) {
       Router.push(APP_BASE_URL.replace('http:', '')); // Router doesn't accept protocol
     } else if (Router.asPath.includes('access_token=')) {
-      // Make a hook that extracts access_token, type and expiration date
-      // (use Router.asPath for url)
-      // example below
-      // http://localhost:3000/home#access_token=<TOKEN>&token_type=Bearer&expires_in=3600
-      Router.push(APP_HOME_URL.replace('http:', ''));
-    } else Router.push(authUrl.replace('https:', ''));
+      saveToLocalStorage(extractAuthDataFromUrl(Router.asPath));
+      getAccessToken() !== undefined &&
+        Router.push(APP_HOME_URL.replace('http:', ''));
+    } else {
+      Router.push(authUrl.replace('https:', ''));
+    }
   }, []);
 
-  return <div></div>;
+  return <FullscreenSpinner />;
 };
 
 export default Login;
