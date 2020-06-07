@@ -1,187 +1,223 @@
 import Head from 'next/head';
 import { ReactElement } from 'react';
-import {Button, Layout, Menu} from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+import { Button, Layout } from 'antd';
+const { Header, Footer, Content } = Layout;
+import { Colors } from '../constants/colors';
 
 export default function Home(): ReactElement {
   return (
-    <div className="container">
-          <Layout className="layout"  style={{  width: '100%' }}>
-              <Header style={{  width: '100%', backgroundColor: "#1db954" }}>
-              </Header>
-              <Content  style={{ padding: '0 50px',backgroundColor: "#181818", paddingTop: '2%', maxHeight: "auto"}}>
-                  <div >
-                        <h1 className="title" style={{ color: "#ffffff", textShadow: "1px 1px 3px rgb(153, 153, 153)"}}>
-                      Welcome to Spotify Lyrics!
-                        </h1>
+        <div className="container">
+            <Layout className="layout" style={{ width: '100%' }}>
+                <Header
+                    style={{
+                      width: '100%',
+                      backgroundColor: Colors.primaryColor,
+                    }}
+                ></Header>
+                <Content
+                    style={{
+                      padding: '0 50px',
+                      backgroundColor: Colors.backgroundColor,
+                      paddingTop: '2%',
+                      maxHeight: 'auto',
+                    }}
+                >
+                    <div>
+                        <h1 className="title">Welcome to Spotify Lyrics!</h1>
+                        <p className="description">
+                            Find the lyrics of your favorite songs.
+                        </p>
+                        <Button
+                            type="primary"
+                            style={{
+                              backgroundColor: Colors.primaryColor,
+                              margin: 'auto',
+                              display: 'block',
+                              borderColor: Colors.primaryColor,
+                            }}
+                        >
+                            Sign in with Spotify
+                        </Button>
+                    </div>
+                    <img src="/walk.svg" alt="Music" className="music" />
+                </Content>
+                <Footer
+                    style={{
+                      textAlign: 'center',
+                      backgroundColor: Colors.footerColor,
+                    }}
+                >
+                    <a
+                        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Powered by{' '}
+                        <img
+                            src="/spotify.svg"
+                            alt="Vercel Logo"
+                            className="logo"
+                        />
+                    </a>
+                </Footer>
+            </Layout>
 
-                     <p className="description" style={{ color: "#ffffff",  textShadow: "1px 1px 3px rgb(153, 153, 153)"}}>
-                         Find the lyrics of your favorite songs.
-                     </p>
-                  <Button type="primary" style={{ backgroundColor: "#1db954", margin:"auto", display:"block", borderColor: "#1db954"}}>
-                      Sign in with Spotify
-                  </Button>
-                  </div>
-                  <img src="/walk.svg" alt="Music" className="music" style={{  margin:"auto", display:"block", width:"70%", height:"70%", paddingTop: "5%", marginBottom: "-25%"}} />
+            <style jsx>{`
+                .container {
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
 
-      </Content>
-        <Footer style={{ textAlign: 'center', backgroundColor: "#e6e6e6"}}>
-            <a
-                href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Powered by{' '}
-                <img src="/spotify.svg" alt="Vercel Logo" className="logo"  />
-            </a>
-        </Footer>
-    </Layout>
+                main {
+                    padding: 5rem 0;
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
 
+                footer {
+                    width: 100%;
+                    height: 100px;
+                    border-top: 1px solid #eaeaea;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
 
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+                footer img {
+                    margin-left: 0.5rem;
+                }
 
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+                footer a {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
 
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                }
 
-        footer img {
-          margin-left: 0.5rem;
-        }
+                .title a {
+                    color: #0070f3;
+                    text-decoration: none;
+                }
 
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+                .title a:hover,
+                .title a:focus,
+                .title a:active {
+                    text-decoration: underline;
+                }
 
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
+                .title {
+                    margin: 0;
+                    line-height: 1.15;
+                    font-size: 4rem;
+                }
 
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
+                .title,
+                .description {
+                    text-align: center;
+                    color: white;
+                    text-shadow: 1px 1px 3px rgb(153, 153, 153);
+                }
 
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
+                .description {
+                    line-height: 1.5;
+                    font-size: 1.5rem;
+                }
 
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
+                code {
+                    background: #fafafa;
+                    border-radius: 5px;
+                    padding: 0.75rem;
+                    font-size: 1.1rem;
+                    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+                        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+                        monospace;
+                }
 
-        .title,
-        .description {
-          text-align: center;
-        }
+                .grid {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
 
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
+                    max-width: 800px;
+                    margin-top: 3rem;
+                }
 
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
+                .music {
+                    margin: auto;
+                    display: block;
+                    width: 70%;
+                    height: 70%;
+                    padding-top: 5%;
+                    margin-bottom: -25%;
+                }
 
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
+                .card {
+                    margin: 1rem;
+                    flex-basis: 45%;
+                    padding: 1.5rem;
+                    text-align: left;
+                    color: inherit;
+                    text-decoration: none;
+                    border: 1px solid #eaeaea;
+                    border-radius: 10px;
+                    transition: color 0.15s ease, border-color 0.15s ease;
+                }
 
-          max-width: 800px;
-          margin-top: 3rem;
-        }
+                .card:hover,
+                .card:focus,
+                .card:active {
+                    color: #0070f3;
+                    border-color: #0070f3;
+                }
 
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
+                .card h3 {
+                    margin: 0 0 1rem 0;
+                    font-size: 1.5rem;
+                }
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
+                .card p {
+                    margin: 0;
+                    font-size: 1.25rem;
+                    line-height: 1.5;
+                }
 
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
+                .logo {
+                    height: 1em;
+                }
 
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
+                @media (max-width: 600px) {
+                    .grid {
+                        width: 100%;
+                        flex-direction: column;
+                    }
+                }
+            `}</style>
 
-        .logo {
-          height: 1em;
-        }
+            <style jsx global>{`
+                html,
+                body {
+                    padding: 0;
+                    margin: 0;
+                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
+                        Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+                        Helvetica Neue, sans-serif;
+                }
 
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  );
+                * {
+                    box-sizing: border-box;
+                }
+            `}</style>
+        </div>
+    );
 }
