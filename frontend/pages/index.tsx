@@ -1,8 +1,11 @@
-import Head from 'next/head'
-import { ReactElement } from 'react'
-import { Button, Layout } from 'antd'
-const { Header, Footer, Content } = Layout
-import { Colors } from '../constants/colors'
+import Head from 'next/head';
+import { ReactElement } from 'react';
+import { Button, Layout } from 'antd';
+import Link from 'next/link';
+
+import Colors from '../constants/colors';
+
+const { Header, Footer, Content } = Layout;
 
 export default function Home(): ReactElement {
   return (
@@ -27,17 +30,19 @@ export default function Home(): ReactElement {
             <p className="description">
               Find the lyrics of your favorite songs.
             </p>
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: Colors.primaryColor,
-                margin: 'auto',
-                display: 'block',
-                borderColor: Colors.primaryColor,
-              }}
-            >
-              Sign in with Spotify
-            </Button>
+            <Link href="/login">
+              <Button
+                type="primary"
+                style={{
+                  backgroundColor: Colors.primaryColor,
+                  margin: 'auto',
+                  display: 'block',
+                  borderColor: Colors.primaryColor,
+                }}
+              >
+                Sign in with Spotify
+              </Button>
+            </Link>
           </div>
           <img src="/walk.svg" alt="Music" className="music" />
         </Content>
@@ -214,5 +219,5 @@ export default function Home(): ReactElement {
         }
       `}</style>
     </div>
-  )
+  );
 }
