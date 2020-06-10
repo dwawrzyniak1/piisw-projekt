@@ -1,69 +1,66 @@
-import Head from 'next/head';
-import { ReactElement } from 'react';
+import Head from 'next/head'
+import { ReactElement } from 'react'
+import { Button, Layout } from 'antd'
+const { Header, Footer, Content } = Layout
+import { Colors } from '../constants/colors'
 
 export default function Home(): ReactElement {
   return (
     <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Layout className="layout" style={{ width: '100%' }}>
+        <Header
+          style={{
+            width: '100%',
+            backgroundColor: Colors.primaryColor,
+          }}
+        ></Header>
+        <Content
+          style={{
+            padding: '0 50px',
+            backgroundColor: Colors.backgroundColor,
+            paddingTop: '2%',
+            maxHeight: 'auto',
+          }}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+          <div>
+            <h1 className="title">Welcome to Spotify Lyrics!</h1>
+            <p className="description">
+              Find the lyrics of your favorite songs.
+            </p>
+            <Button
+              type="primary"
+              style={{
+                backgroundColor: Colors.primaryColor,
+                margin: 'auto',
+                display: 'block',
+                borderColor: Colors.primaryColor,
+              }}
+            >
+              Sign in with Spotify
+            </Button>
+          </div>
+          <img src="/walk.svg" alt="Music" className="music" />
+        </Content>
+        <Footer
+          style={{
+            textAlign: 'center',
+            backgroundColor: Colors.footerColor,
+          }}
+        >
+          <a
+            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Powered by{' '}
+            <img src="/spotify.svg" alt="Vercel Logo" className="logo" />
+          </a>
+        </Footer>
+      </Layout>
 
       <style jsx>{`
         .container {
           min-height: 100vh;
-          padding: 0 0.5rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -123,6 +120,8 @@ export default function Home(): ReactElement {
         .title,
         .description {
           text-align: center;
+          color: white;
+          text-shadow: 1px 1px 3px rgb(153, 153, 153);
         }
 
         .description {
@@ -147,6 +146,15 @@ export default function Home(): ReactElement {
 
           max-width: 800px;
           margin-top: 3rem;
+        }
+
+        .music {
+          margin: auto;
+          display: block;
+          width: 70%;
+          height: 70%;
+          padding-top: 5%;
+          margin-bottom: -25%;
         }
 
         .card {
@@ -206,5 +214,5 @@ export default function Home(): ReactElement {
         }
       `}</style>
     </div>
-  );
+  )
 }
