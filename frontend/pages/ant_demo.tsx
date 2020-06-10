@@ -3,7 +3,7 @@
 // * TO BE DELETED OR KEPT AS A FUTURE REFERENCE        *
 // ******************************************************
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Alert } from 'antd';
 
 // Applies post-initialization of component
@@ -28,10 +28,7 @@ const AntTest: React.FC = () => {
       >
         Click me!
       </Button>
-      <Alert
-        style={{ display: showMessage ? 'inherit' : 'none' }}
-        message="Button is ON."
-      />
+      <Alert style={{ display: showMessage ? 'inherit' : 'none' }} message="Button is ON." />
     </div>
   );
 };

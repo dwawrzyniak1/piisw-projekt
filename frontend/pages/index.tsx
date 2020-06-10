@@ -1,5 +1,4 @@
-import Head from 'next/head';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Button, Layout } from 'antd';
 import Link from 'next/link';
 
@@ -7,7 +6,7 @@ import Colors from '../constants/colors';
 
 const { Header, Footer, Content } = Layout;
 
-export default function Home(): ReactElement {
+export default function Index(): ReactElement {
   return (
     <div className="container">
       <Layout className="layout" style={{ width: '100%' }}>
@@ -27,9 +26,7 @@ export default function Home(): ReactElement {
         >
           <div>
             <h1 className="title">Welcome to Spotify Lyrics!</h1>
-            <p className="description">
-              Find the lyrics of your favorite songs.
-            </p>
+            <p className="description">Find the lyrics of your favorite songs.</p>
             <Link href="/login">
               <Button
                 type="primary"
@@ -57,8 +54,7 @@ export default function Home(): ReactElement {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Powered by{' '}
-            <img src="/spotify.svg" alt="Vercel Logo" className="logo" />
+            Powered by <img src="/spotify.svg" alt="Vercel Logo" className="logo" />
           </a>
         </Footer>
       </Layout>
@@ -139,8 +135,8 @@ export default function Home(): ReactElement {
           border-radius: 5px;
           padding: 0.75rem;
           font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+          font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+            Bitstream Vera Sans Mono, Courier New, monospace;
         }
 
         .grid {
@@ -209,9 +205,8 @@ export default function Home(): ReactElement {
         body {
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         }
 
         * {

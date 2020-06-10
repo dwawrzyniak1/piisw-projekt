@@ -1,9 +1,5 @@
-import {
-  getAccessToken,
-  getTokenType,
-  getTokenExpirationTime,
-} from '../utils/localStorage';
-import { useEffect, useState } from 'react';
+import { getAccessToken, getTokenType, getTokenExpirationTime } from '../utils/localStorage';
+import React, { useEffect, useState } from 'react';
 
 const Home: React.FC = () => {
   const [token, setToken] = useState<string>('');
