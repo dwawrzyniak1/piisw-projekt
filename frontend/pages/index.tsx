@@ -38,6 +38,11 @@ export default function Home(): ReactElement {
                   margin: 'auto',
                   display: 'block',
                   borderColor: Colors.primaryColor,
+                  minHeight: '50px',
+                  borderRadius: '500px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  fontWeight: 'bold',
                 }}
               >
                 Sign in with Spotify
@@ -126,7 +131,8 @@ export default function Home(): ReactElement {
         .description {
           text-align: center;
           color: white;
-          text-shadow: 1px 1px 3px rgb(153, 153, 153);
+          text-shadow: 1px 1px 2px rgb(153, 153, 153);
+          font-family: 'Roboto', sans-serif;
         }
 
         .description {
@@ -156,10 +162,8 @@ export default function Home(): ReactElement {
         .music {
           margin: auto;
           display: block;
-          width: 70%;
-          height: 70%;
-          padding-top: 5%;
-          margin-bottom: -25%;
+          max-width: 38%;
+          padding-top: 3%;
         }
 
         .card {
