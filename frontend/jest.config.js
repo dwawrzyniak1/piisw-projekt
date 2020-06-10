@@ -3,6 +3,15 @@
 module.exports = {
   // The root of your source code, typically /src
   // `<rootDir>` is a token Jest substitutes
+  globals: {
+    // https://github.com/vercel/next.js/issues/8663#issue-490553899
+    // we must specify a custom tsconfig for tests because we need the typescript transform
+    // to transform jsx into js rather than leaving it jsx such as the next build requires.  you
+    // can see this setting in tsconfig.jest.json -> "jsx": "react"
+    'ts-jest': {
+      tsConfig: 'tsconfig.jest.json',
+    },
+  },
   roots: ['<rootDir>'],
 
   // Jest transformations -- this adds support for TypeScript
