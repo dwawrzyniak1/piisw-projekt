@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Data
@@ -22,8 +20,8 @@ public class Song {
     String artist;
     String album;
     String photoUlr;
+    @Lob
     String geniusLyrics;
-    String language;
     @OneToMany(mappedBy = "favouriteSong")
     Set<Favourite> likedBy;
 }

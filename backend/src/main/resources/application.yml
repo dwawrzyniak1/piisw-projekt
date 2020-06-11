@@ -4,11 +4,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/spotify_lyrics
     username: postgres
     password: admin
+    driver-class-name: org.postgresql.Driver
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        ddl-auto: create
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      generate-dll: true
 
 genius:
   api:
