@@ -1,23 +1,39 @@
 import { getAccessToken, getTokenType, getTokenExpirationTime } from '../utils/localStorage';
 import React, { useEffect, useState } from 'react';
+import get20lastPlayedSongs from '../requests/spotify/personalSongs';
+import Song from '../models/Song';
 
 const Home: React.FC = () => {
-  const [token, setToken] = useState<string>('');
-  const [tokenType, setTokenType] = useState<string>('');
-  const [tokenExpirationTime, setTokenExpirationTime] = useState<number>(null);
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [songsLoadError, setSongsLoadError] = useState<string>('');
 
   useEffect(() => {
-    setToken(getAccessToken());
-    setTokenType(getTokenType());
-    setTokenExpirationTime(getTokenExpirationTime());
+    (async () => {
+      loadSongsInfo();
+    })();
   }, []);
+
+  const loadSongsInfo = async () => {
+    const [loadedSongs, error] = await get20lastPlayedSongs(getAccessToken(), getTokenType());
+    setSongs(loadedSongs);
+    setSongsLoadError(error);
+  };
 
   return (
     <div>
-      <h1>Welcome home</h1>
-      <p>Token: {token}</p>
-      <p>Token type: {tokenType}</p>
-      <p>Expiration time: {tokenExpirationTime}</p>
+      <h2>20 last played songs:</h2>
+      <ol>
+        {songs.map((song, index) => (
+          <li key={index}>
+            <b>{song.title}</b>
+            <br />
+            {song.artists}
+            <br />
+            <img src={song.albumSmallCoverUrl}></img>
+          </li>
+        ))}
+      </ol>
+      {songsLoadError !== '' ? <p>Error: {songsLoadError}</p> : ''}
     </div>
   );
 };
