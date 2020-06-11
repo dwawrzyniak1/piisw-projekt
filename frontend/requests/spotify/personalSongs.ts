@@ -1,25 +1,21 @@
 import Song from '../../models/Song';
-import { getTokenType, getAccessToken } from '../../utils/localStorage';
+import { fetchSpotify, Track } from './fetchSpotify';
 
 const get20lastPlayedSongs = async (): Promise<[Song[], string]> => {
   let errorMessage = '';
   const songs: Song[] = [];
 
-  const requestHeaders: any = {
-    'Content-Type': 'application/json',
-    Authorization: `${getTokenType()} ${getAccessToken()}`,
-  };
-  const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
-    method: 'GET',
-    headers: requestHeaders,
-  });
+  const response = await fetchSpotify(
+    'https://api.spotify.com/v1/me/player/recently-played',
+    'GET'
+  );
   if (response.status !== 200) {
     errorMessage = response.statusText;
     return [songs, errorMessage];
   }
 
   const data = await response.json();
-  data.items.forEach((item: { track: any }) => {
+  data.items.forEach((item: { track: Track }) => {
     const track = item.track;
 
     const title = track.name;
