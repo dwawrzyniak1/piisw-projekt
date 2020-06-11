@@ -4,7 +4,7 @@ import Album from '../../models/Album';
 
 const findSongs = async (query: string): Promise<[Song[], string]> => {
   const SEARCH_SCOPE = ['track']; // , 'artist', 'album'];
-  const SONGS_PER_SCOPE = 5;
+  const SONGS_PER_SCOPE = 4;
 
   let errorMessage = '';
   const songs: Song[] = [];
@@ -48,7 +48,6 @@ const findSongs = async (query: string): Promise<[Song[], string]> => {
       });
     }
   );
-
   return [songs, errorMessage];
 };
 

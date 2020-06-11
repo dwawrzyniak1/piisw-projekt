@@ -1,8 +1,8 @@
-import { getAccessToken, getTokenType, getTokenExpirationTime } from '../utils/localStorage';
 import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
 import findSongs from '../requests/spotify/findSongs';
+import SongDropdownSearch from '../components/searching/SongDropdownSearch';
 
 const Home: React.FC = () => {
   const [lastSongs, setLastSongs] = useState<Song[]>([]);
@@ -14,7 +14,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     (async () => {
       loadRecentSongsInfo();
-      findSong('entombment');
     })();
   }, []);
 
@@ -38,6 +37,8 @@ const Home: React.FC = () => {
             <b>{song.title}</b>
             <br />
             {song.artists.join(', ')}
+            <br />
+            {song.album.title}
             {song.album.releaseDate ? (
               <span>
                 <br />
@@ -66,8 +67,10 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h2>Searched songs:</h2>
-      <div>{renderSongs(searchedSongs)}</div>
+      <h2>Seach:</h2>
+      <div>
+        <SongDropdownSearch />
+      </div>
       <h2>20 last played songs:</h2>
       <div>
         {renderSongs(lastSongs)}
