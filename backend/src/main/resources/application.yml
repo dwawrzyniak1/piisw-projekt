@@ -1,0 +1,18 @@
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spotify_lyrics
+    username: postgres
+    password: admin
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: create
+
+genius:
+  api:
+    token: DFnGiiGzLyEYS7mIQU22G_8Oq0mQAhvQ3oPKQuk2DW1RmEzljsbpMLBcXlG2F1Xs
+    url: https://api.genius.com
+    endpoints:
+      search: /search
