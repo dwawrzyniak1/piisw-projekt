@@ -23,12 +23,6 @@ const Home: React.FC = () => {
     setLastSongsLoadError(error);
   };
 
-  const findSong = async (query: string) => {
-    const [loadedSongs, error] = await findSongs(query);
-    setSearchedSongs(loadedSongs);
-    setSearchedSongsError(error);
-  };
-
   const renderSongs = (songs: Song[]) => {
     return (
       <ol>
