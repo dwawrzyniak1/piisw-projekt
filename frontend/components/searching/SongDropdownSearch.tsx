@@ -18,6 +18,7 @@ const searchResult = async (
   }
   return [
     songs.map((song: Song, index: number) => {
+      console.log(index);
       const label = (
         <div
           key={index}
@@ -37,7 +38,7 @@ const searchResult = async (
         </div>
       );
 
-      return { label, value: `${song.title};${song.artists[0]}` };
+      return { label, value: `${song.title};${song.artists[0]};${index}` };
     }),
     '',
   ];
