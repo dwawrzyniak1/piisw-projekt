@@ -29,8 +29,7 @@ const Login: React.FC = () => {
       Router.push(APP_BASE_URL.replace('http:', '')); // Router doesn't accept protocol
     } else if (Router.asPath.includes('access_token=')) {
       saveToLocalStorage(extractAuthDataFromUrl(Router.asPath));
-      getAccessToken() !== undefined &&
-        Router.push(APP_HOME_URL.replace('http:', ''));
+      getAccessToken() !== undefined && Router.push(APP_HOME_URL.replace('http:', ''));
     } else {
       Router.push(authUrl.replace('https:', ''));
     }

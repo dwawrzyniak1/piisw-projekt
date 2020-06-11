@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
+## Running tests
+
+All tests:
+
+```bash
+npm run test
+```
+
+All tests matching the string "page"
+
+```bash
+npm test -- -t 'page'
+```
+
 ## Getting Started
 
 First, run the development server:

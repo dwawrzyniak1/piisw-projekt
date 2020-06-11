@@ -10,11 +10,11 @@ export const extractAuthDataFromUrl = (
   const parameterSubstring = url.split('#')[1];
   // access_token=<TOKEN>&token_type=Bearer&expires_in=3600
 
-  const parameters = parameterSubstring.split('&');
+  const parameters = parameterSubstring?.split('&');
   // [ "access_token=<TOKEN>", "token_type=Bearer", "expires_in=3600" ]
 
   const extractedData = {};
-  parameters.forEach(parameter => {
+  parameters?.forEach(parameter => {
     const [key, value] = parameter.split('=');
     extractedData[key] = value;
   });
