@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import Song from '../../models/Song';
+import { getTokenType, getAccessToken } from '../../utils/localStorage';
 
-const get20lastPlayedSongs = async (
-  accessToken: string,
-  tokenType: string
-): Promise<[Song[], string]> => {
+const get20lastPlayedSongs = async (): Promise<[Song[], string]> => {
   let errorMessage = '';
   const songs: Song[] = [];
 
   const requestHeaders: any = {
     'Content-Type': 'application/json',
-    Authorization: `${tokenType} ${accessToken}`,
+    Authorization: `${getTokenType()} ${getAccessToken()}`,
   };
   const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
     method: 'GET',
@@ -27,17 +24,19 @@ const get20lastPlayedSongs = async (
 
     const title = track.name;
     const artists = track.artists.map((artist: { name: string }) => artist.name);
-    const album = track.album.name;
+    const albumTitle = track.album.name;
     const albumBigCoverUrl = track.album.images[0].url;
     const albumMediumCoverUrl = track.album.images[1].url;
     const albumSmallCoverUrl = track.album.images[2].url;
     songs.push({
       title,
       artists,
-      album,
-      albumBigCoverUrl,
-      albumMediumCoverUrl,
-      albumSmallCoverUrl,
+      album: {
+        albumBigCoverUrl,
+        albumMediumCoverUrl,
+        albumSmallCoverUrl,
+        title: albumTitle,
+      },
     });
   });
 
