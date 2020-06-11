@@ -1,11 +1,11 @@
-package pwr.piisw.backend.dtos;
+package pwr.piisw.backend.dtos.requests;
 
 import lombok.NonNull;
 import lombok.Value;
 import pwr.piisw.backend.entities.Song;
 
 @Value
-public class SongRequest {
+public class SongInfo {
     @NonNull String title;
     String artist;
     String album;
