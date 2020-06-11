@@ -8,7 +8,6 @@ import { Button, Alert } from 'antd';
 
 // Applies post-initialization of component
 import styles from './css/ant_demo.module.css';
-
 import CSS from 'csstype';
 
 // Applies before during initialization of component
