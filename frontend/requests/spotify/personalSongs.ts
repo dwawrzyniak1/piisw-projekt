@@ -5,7 +5,7 @@ const get20lastPlayedSongs = async (
   accessToken: string,
   tokenType: string
 ): Promise<[Song[], string]> => {
-  const errorMessage = '';
+  let errorMessage = '';
   const songs: Song[] = [];
 
   const requestHeaders: any = {
@@ -16,11 +16,13 @@ const get20lastPlayedSongs = async (
     method: 'GET',
     headers: requestHeaders,
   });
+  if (response.status !== 200) {
+    errorMessage = response.statusText;
+    return [songs, errorMessage];
+  }
+
   const data = await response.json();
-  // if (response.status === 401) {
-  //   setErrorMessage('Access token is expired.');
-  // }
-  data.items.forEach(item => {
+  data.items.forEach((item: { track: any }) => {
     const track = item.track;
 
     const title = track.name;
