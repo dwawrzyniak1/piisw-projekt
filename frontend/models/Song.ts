@@ -1,9 +1,9 @@
+import Album from '../models/Album';
+
 class Song {
   title: string;
   artists: string[];
-  album: string;
-  albumBigCoverUrl: string;
-  albumMediumCoverUrl: string;
-  albumSmallCoverUrl: string;
+  album: Album;
+  popularity?: number;
 }
 export default Song;
