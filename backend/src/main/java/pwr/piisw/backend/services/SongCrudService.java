@@ -28,7 +28,7 @@ public class SongCrudService {
     public Favourite markAsFavourite(Long songId, String username) {
         Song song = getSongOrThrow(songId);
         User user = getUserOrThrow(username);
-        Optional<Favourite> favouriteOptional = favouritesRepository.findBySongAndUser(song, user);
+        Optional<Favourite> favouriteOptional = favouritesRepository.findByFavouriteSongAndUser(song, user);
         return favouriteOptional.orElse(favouritesRepository.save(new Favourite(user, song, new Date())));
     }
 

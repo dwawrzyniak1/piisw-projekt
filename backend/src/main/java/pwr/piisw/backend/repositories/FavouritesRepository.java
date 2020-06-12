@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface FavouritesRepository extends PagingAndSortingRepository<Favourite, Long> {
     List<Favourite> findAllByUserOrderByCreatedAtDesc(User user, Pageable pageable);
 
-    Optional<Favourite> findBySongAndUser(Song song, User user);
+    Optional<Favourite> findByFavouriteSongAndUser(Song song, User user);
 }
