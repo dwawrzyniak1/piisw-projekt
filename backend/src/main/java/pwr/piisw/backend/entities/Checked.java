@@ -1,6 +1,9 @@
 package pwr.piisw.backend.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,12 +12,22 @@ import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Checked {
     @Id
     long id;
     @ManyToOne
-    User user;
+    @NonNull User user;
     @ManyToOne
-    Song song;
-    Date createdAt;
+    @NonNull Song song;
+    long counter;
+    @NonNull Date createdAt;
+    @NonNull Date updatedAt;
+
+    public Checked updateCounterAndDate() {
+        this.counter++;
+        this.updatedAt = new Date();
+        return this;
+    }
 }
