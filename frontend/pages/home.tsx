@@ -3,7 +3,7 @@ import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
 import { playSong } from '../requests/spotify/player';
 import SongDropdownSearch from '../components/searching/SongDropdownSearch';
-import { Layout, Table, Card } from 'antd';
+import { Layout, Table, Card, Alert } from 'antd';
 import Colors from '../constants/colors';
 
 const Home: React.FC = () => {
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
             <li key={index}>
               <div style={{}}>
                 <img
-                  src={song.album.albumSmallCoverUrl}
+                  src={song.album.albumMediumCoverUrl}
                   style={{
                     marginRight: '3%',
                     float: 'left',
@@ -104,24 +104,6 @@ const Home: React.FC = () => {
                   {song.album.title}
                 </span>
               </div>
-              {song.album.releaseDate ? (
-                <span>
-                  <br />
-                  Release date:
-                  <i> {song.album.releaseDate}</i>
-                </span>
-              ) : (
-                ''
-              )}
-              {song.popularity ? (
-                <span>
-                  <br />
-                  Popularity:
-                  <i> {song.popularity}</i>
-                </span>
-              ) : (
-                ''
-              )}
             </li>
           </Card>
         ))}
@@ -172,17 +154,19 @@ const Home: React.FC = () => {
               Seach lyrics of your favorite songs:
             </h2>
             <div style={{ margin: 'auto', width: '50%' }}>
-              <SongDropdownSearch />
+              <SongDropdownSearch onSelectCallback={playSong} />
             </div>
             <h2 style={{ color: 'white', marginTop: '50px', marginLeft: '5%', fontSize: '21px' }}>
               20 last played songs:
             </h2>
-            <div>
-              {renderSongs(lastSongs)}
-              {lastSongsLoadError !== '' ? <p>Error: {lastSongsLoadError}</p> : ''}
-            </div>
+            <div>{renderSongs(lastSongs)}</div>
           </div>
         </Content>
+        {lastSongsLoadError !== '' ? (
+          <Alert type="error" message={`An error has occured! (${lastSongsLoadError})`} banner />
+        ) : (
+          ''
+        )}
       </Layout>
 
       <style jsx>{`
@@ -193,7 +177,6 @@ const Home: React.FC = () => {
           font-weight: bold;
         }
       `}</style>
-
     </div>
   );
 };
