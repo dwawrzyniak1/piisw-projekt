@@ -2,7 +2,7 @@ package pwr.piisw.backend.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pwr.piisw.backend.dtos.requests.SongInfo;
+import pwr.piisw.backend.dtos.song.SongQueryInfo;
 import pwr.piisw.backend.dtos.genius.GeniusSongInfo;
 import pwr.piisw.backend.entities.Song;
 import pwr.piisw.backend.repositories.SongRepository;
@@ -19,22 +19,22 @@ public class SongRetrievalService {
     private final SongRepository songRepository;
 
     @Transactional // lyrics are stored as lob in db
-    public Optional<Song> getSong(SongInfo songInfo) {
-        Optional<Song> storedSong = songRepository.findByTitleAndArtist(songInfo.getTitle(), songInfo.getArtist());
+    public Optional<Song> getSong(SongQueryInfo songQueryInfo) {
+        Optional<Song> storedSong = songRepository.findByTitleAndArtist(songQueryInfo.getTitle(), songQueryInfo.getArtist());
         return storedSong.isPresent()
             ? storedSong
-            : scrapeAndStore(songInfo);
+            : scrapeAndStore(songQueryInfo);
     }
 
-    private Optional<Song> scrapeAndStore(SongInfo songInfo) {
-        Optional<Song> song = retrieveSongFromGenius(songInfo);
-        song = song.flatMap(s -> emptyOnSongsMismatch(songInfo, s));
+    private Optional<Song> scrapeAndStore(SongQueryInfo songQueryInfo) {
+        Optional<Song> song = retrieveSongFromGenius(songQueryInfo);
+        song = song.flatMap(s -> emptyOnSongsMismatch(songQueryInfo, s));
         song.ifPresent(songRepository::save);
         return song;
     }
 
-    private Optional<Song> retrieveSongFromGenius(SongInfo songRequest) {
-        Optional<GeniusSongInfo> songInfoOptional = proxy.searchForSong(songRequest.toString());
+    private Optional<Song> retrieveSongFromGenius(SongQueryInfo songQueryInfo) {
+        Optional<GeniusSongInfo> songInfoOptional = proxy.searchForSong(songQueryInfo.toString());
 
         if (songInfoOptional.isPresent()) {
             GeniusSongInfo songInfo = songInfoOptional.get();
@@ -43,7 +43,7 @@ public class SongRetrievalService {
             Song song = Song.builder()
                     .title(songInfo.getTitle())
                     .artist(songInfo.getArtist())
-//   TODO                 .album(songRequest.getAlbum()) // It is much easier to get album from request
+                    .album(songQueryInfo.getAlbum()) // It is much easier to get album from request
                     .photoUlr(songInfo.getPhotoUrl())
                     .geniusLyrics(lyrics).build();
 
@@ -53,7 +53,7 @@ public class SongRetrievalService {
         return Optional.empty();
     }
 
-    private Optional<Song> emptyOnSongsMismatch(SongInfo request, Song retrieved) {
+    private Optional<Song> emptyOnSongsMismatch(SongQueryInfo request, Song retrieved) {
         if (request.doesMatchWithSong(retrieved)) {
             return Optional.of(retrieved);
         }

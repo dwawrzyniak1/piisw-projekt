@@ -26,8 +26,8 @@ public class Checked {
     @NonNull Date updatedAt;
 
     public Checked updateCounterAndDate() {
-        this.counter++;
-        this.updatedAt = new Date();
+        this.setCounter(this.counter + 1);
+        this.setUpdatedAt(new Date());
         return this;
     }
 }

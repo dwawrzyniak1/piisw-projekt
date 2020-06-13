@@ -1,9 +1,9 @@
 package pwr.piisw.backend.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pwr.piisw.backend.dtos.song.SongBasicInfo;
 import pwr.piisw.backend.entities.Checked;
 import pwr.piisw.backend.entities.Favourite;
 import pwr.piisw.backend.entities.Song;
@@ -32,20 +32,20 @@ public class UserService {
     }
 
     @Transactional
-    public List<Song> getFavouritesPaginated(String username, int page, int size) {
+    public List<SongBasicInfo> getFavouritesPaginated(String username, Pageable pageable) {
         User user = getUserOrThrow(username);
-        Pageable pageable = PageRequest.of(page, size);
         return favouritesRepository.findAllByUserOrderByCreatedAtDesc(user, pageable).stream()
                 .map(Favourite::getFavouriteSong)
+                .map(SongBasicInfo::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<Song> getLatestCheckedSongsPaginated(String username, int page, int size) {
+    public List<SongBasicInfo> getLatestCheckedSongsPaginated(String username, Pageable pageable) {
         User user = getUserOrThrow(username);
-        Pageable pageable = PageRequest.of(page, size);
         return checkedRepository.findAllByUserOrderByUpdatedAtDesc(user, pageable).stream()
                 .map(Checked::getSong)
+                .map(SongBasicInfo::new)
                 .collect(Collectors.toList());
     }
 

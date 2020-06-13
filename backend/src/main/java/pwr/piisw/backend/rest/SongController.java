@@ -1,9 +1,10 @@
 package pwr.piisw.backend.rest;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pwr.piisw.backend.dtos.requests.SongCheckRequest;
-import pwr.piisw.backend.entities.Favourite;
+import pwr.piisw.backend.dtos.inbound.SongDetailsRequest;
+import pwr.piisw.backend.dtos.outbound.SongDetailsResponse;
 import pwr.piisw.backend.entities.Song;
 import pwr.piisw.backend.services.SongCrudService;
 import pwr.piisw.backend.services.SongRetrievalService;
@@ -19,14 +20,17 @@ public class SongController {
     private final SongCrudService crudService;
 
     @PostMapping
-    public Song checkSongDetails(@RequestBody SongCheckRequest songCheck) {
-        Optional<Song> song = retrievalService.getSong(songCheck.getSong());
-        song.ifPresent(s -> crudService.markAsChecked(s, songCheck.getUsername()));
-        return song.orElse(null);
+    public ResponseEntity<SongDetailsResponse> checkSongDetails(@RequestBody SongDetailsRequest songDetailsRequest) {
+        Optional<Song> song = retrievalService.getSong(songDetailsRequest.getSong());
+        song.ifPresent(s -> crudService.markAsChecked(s, songDetailsRequest.getUsername()));
+        Optional<SongDetailsResponse> responseBody = song.map(s -> new SongDetailsResponse(s, songDetailsRequest.getUsername()));
+        return responseBody.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(404).body(new SongDetailsResponse("Couldn't find song within Genius resources")));
     }
 
     @PostMapping("/{songId}")
-    public Favourite markAsFavourite(@PathVariable Long songId, @RequestBody String username) {
-        return crudService.markAsFavourite(songId, username);
+    public ResponseEntity<String> markAsFavourite(@PathVariable Long songId, @RequestBody String username) {
+        crudService.markAsFavourite(songId, username);
+        return ResponseEntity.ok("succeed");
     }
 }
