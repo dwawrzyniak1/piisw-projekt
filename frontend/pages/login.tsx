@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import { useEffect } from 'react';
+import { Layout } from 'antd';
 
 import { AUTH_ENDPOINT, CLIENT_ID } from '../constants/spotify';
 import { APP_HOME_URL, APP_BASE_URL, APP_LOGIN_URL } from '../constants/urls';

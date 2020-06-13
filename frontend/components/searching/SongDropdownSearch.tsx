@@ -93,8 +93,22 @@ const SongDropdownSearch = ({ onSelectCallback }: Props) => {
         onChange={setQuery}
         value={query}
       >
+        {/* tslint:disable-next-line:max-line-length */}
         <Input.Search size="large" placeholder="Start typing song title..." enterButton />
       </AutoComplete>
+      <style jsx>{`
+        :global(.ant-input-search-button) {
+          color: white;
+          background-color: #1db954;
+          border-color: #1db954;
+        }
+
+        :global(.ant-input-search-button:hover) {
+          color: black;
+          background-color: #65e792;
+          border-color: #1db954;
+        }
+      `}</style>
     </div>
   );
 };
