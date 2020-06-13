@@ -85,7 +85,9 @@ const SongDropdownSearch = ({ onSelectCallback }: Props) => {
       <AutoComplete
         dropdownMatchSelectWidth={252}
         style={{
-          width: 700,
+          width: '550px',
+          position: 'absolute',
+          marginTop: '14px',
         }}
         options={error ? errorNotice : options}
         onSelect={onSelect}
@@ -99,13 +101,13 @@ const SongDropdownSearch = ({ onSelectCallback }: Props) => {
       <style jsx>{`
         :global(.ant-input-search-button) {
           color: white;
-          background-color: #1db954;
+          background-color: #181818;
           border-color: #1db954;
         }
 
         :global(.ant-input-search-button:hover) {
-          color: black;
-          background-color: #65e792;
+          color: white;
+          background-color: #737373;
           border-color: #1db954;
         }
       `}</style>
