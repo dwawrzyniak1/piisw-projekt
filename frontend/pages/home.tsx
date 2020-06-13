@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
-import playSong from '../requests/spotify/playSong';
+import { playSong } from '../requests/spotify/player';
 import SongDropdownSearch from '../components/searching/SongDropdownSearch';
 
 const Home: React.FC = () => {

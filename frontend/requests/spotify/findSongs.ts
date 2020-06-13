@@ -1,6 +1,7 @@
 import Song from '../../models/Song';
 import { fetchSpotify, Track } from './fetchSpotify';
 import { HTTP_OK } from '../../constants/httpCodes';
+import { extractSong } from '../../utils/spotifyData';
 
 const findSongs = async (query: string): Promise<[Song[], string]> => {
   const SEARCH_SCOPE = ['track']; // , 'artist', 'album'];
@@ -21,19 +22,7 @@ const findSongs = async (query: string): Promise<[Song[], string]> => {
   }
   const data = await response.json();
   data.tracks.items.forEach((track: Track) => {
-    songs.push({
-      title: track.name,
-      artists: track.artists.map((artist: { name: string }) => artist.name),
-      album: {
-        title: track.album.name,
-        albumBigCoverUrl: track.album.images[0].url,
-        albumMediumCoverUrl: track.album.images[1].url,
-        albumSmallCoverUrl: track.album.images[2].url,
-        releaseDate: track.album.release_date,
-      },
-      popularity: track.popularity,
-      spotifyUri: track.uri,
-    });
+    songs.push(extractSong(track));
   });
 
   return [songs, errorMessage];
