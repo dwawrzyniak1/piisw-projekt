@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
-import findSongs from '../requests/spotify/findSongs';
+import playSong from '../requests/spotify/playSong';
 import SongDropdownSearch from '../components/searching/SongDropdownSearch';
 
 const Home: React.FC = () => {
   const [lastSongs, setLastSongs] = useState<Song[]>([]);
   const [lastSongsLoadError, setLastSongsLoadError] = useState<string>('');
-
-  const [searchedSongs, setSearchedSongs] = useState<Song[]>([]);
-  const [searchedSongsLoadError, setSearchedSongsError] = useState<string>('');
 
   useEffect(() => {
     (async () => {
@@ -63,7 +60,7 @@ const Home: React.FC = () => {
     <div>
       <h2>Seach:</h2>
       <div>
-        <SongDropdownSearch onSelectCallback={song => console.log(song)} />
+        <SongDropdownSearch onSelectCallback={playSong} />
       </div>
       <h2>20 last played songs:</h2>
       <div>
