@@ -63,7 +63,7 @@ const Home: React.FC = () => {
     <div>
       <h2>Seach:</h2>
       <div>
-        <SongDropdownSearch />
+        <SongDropdownSearch onSelectCallback={song => console.log(song)} />
       </div>
       <h2>20 last played songs:</h2>
       <div>
