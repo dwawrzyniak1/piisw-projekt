@@ -30,21 +30,6 @@ const Home: React.FC = () => {
   const renderSongs = (songs: Song[]) => {
     return (
       <div style={{ width: '90%', margin: 'auto' }}>
-        {/* <div
-          style={{
-            width: '90%',
-            margin: 'auto',
-            color: 'white',
-            backgroundColor: Colors.backgroundColor,
-            fontSize: '17px',
-            fontWeight: 'bold',
-            marginTop: '2%',
-          }}
-        >
-          <span style={{ marginLeft: '10%' }}>Title</span>
-          <span style={{ left: '46%', position: 'absolute' }}>Artist</span>
-          <span style={{ left: '71%', position: 'absolute' }}>Album</span>
-        </div> */}
         {songs.map((song: Song, index: number) => (
           <Card
             style={{
