@@ -1,5 +1,6 @@
 import Song from '../../models/Song';
 import { fetchSpotify, Track } from './fetchSpotify';
+import { HTTP_OK } from '../../constants/httpCodes';
 
 const findSongs = async (query: string): Promise<[Song[], string]> => {
   const SEARCH_SCOPE = ['track']; // , 'artist', 'album'];
@@ -14,7 +15,7 @@ const findSongs = async (query: string): Promise<[Song[], string]> => {
     )}&limit=${SONGS_PER_SCOPE}`,
     'GET'
   );
-  if (response.status !== 200) {
+  if (response.status !== HTTP_OK) {
     errorMessage = response.statusText;
     return [songs, errorMessage];
   }
@@ -31,6 +32,7 @@ const findSongs = async (query: string): Promise<[Song[], string]> => {
         releaseDate: track.album.release_date,
       },
       popularity: track.popularity,
+      spotifyUri: track.uri,
     });
   });
 
