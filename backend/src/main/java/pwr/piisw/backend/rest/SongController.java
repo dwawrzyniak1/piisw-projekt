@@ -1,34 +1,32 @@
 package pwr.piisw.backend.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import pwr.piisw.backend.dtos.SongRequest;
-import pwr.piisw.backend.dtos.genius.GeniusSongInfo;
+import org.springframework.web.bind.annotation.*;
+import pwr.piisw.backend.dtos.requests.SongCheckRequest;
+import pwr.piisw.backend.entities.Favourite;
 import pwr.piisw.backend.entities.Song;
-import pwr.piisw.backend.exceptions.GeniusScrapingException;
-import pwr.piisw.backend.repositories.SongRepository;
-import pwr.piisw.backend.services.GeniusProxyService;
-import pwr.piisw.backend.services.LyricsScraperService;
+import pwr.piisw.backend.services.SongCrudService;
+import pwr.piisw.backend.services.SongRetrievalService;
+
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/song")
 @RequiredArgsConstructor
 public class SongController {
 
-    private final GeniusProxyService proxy;
-    private final LyricsScraperService scraper;
-    private final SongRepository repository;
+    private final SongRetrievalService retrievalService;
+    private final SongCrudService crudService;
 
-    @PostMapping("/song")
-    public Song getSong(@RequestBody SongRequest param) throws GeniusScrapingException {
-        GeniusSongInfo songInfo = proxy.searchForSong(param.toString()).get();
-        String lyrics = scraper.scrapeLyrics(songInfo.getGeniusUrl(), 5);
-        return Song.builder()
-                .title(songInfo.getTitle())
-                .artist(songInfo.getArtist())
-                .photoUlr(songInfo.getPhotoUrl())
-                .geniusLyrics(lyrics).build();
+    @PostMapping
+    public Song checkSongDetails(@RequestBody SongCheckRequest songCheck) {
+        Optional<Song> song = retrievalService.getSong(songCheck.getSong());
+        song.ifPresent(s -> crudService.markAsChecked(s, songCheck.getUsername()));
+        return song.orElse(null);
     }
 
+    @PostMapping("/{songId}")
+    public Favourite markAsFavourite(@PathVariable Long songId, @RequestBody String username) {
+        return crudService.markAsFavourite(songId, username);
+    }
 }

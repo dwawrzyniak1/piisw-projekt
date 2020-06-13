@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
-import findSongs from '../requests/spotify/findSongs';
+import { playSong } from '../requests/spotify/player';
 import SongDropdownSearch from '../components/searching/SongDropdownSearch';
 import { Layout, Table, Card } from 'antd';
 import Colors from '../constants/colors';
@@ -9,9 +9,6 @@ import Colors from '../constants/colors';
 const Home: React.FC = () => {
   const [lastSongs, setLastSongs] = useState<Song[]>([]);
   const [lastSongsLoadError, setLastSongsLoadError] = useState<string>('');
-
-  const [searchedSongs, setSearchedSongs] = useState<Song[]>([]);
-  const [searchedSongsLoadError, setSearchedSongsError] = useState<string>('');
 
   const { Content, Header } = Layout;
 
@@ -196,6 +193,7 @@ const Home: React.FC = () => {
           font-weight: bold;
         }
       `}</style>
+
     </div>
   );
 };

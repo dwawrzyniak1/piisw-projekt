@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Input, AutoComplete } from 'antd';
 import _ from 'lodash';
 
@@ -37,27 +37,38 @@ const searchResult = async (
         </div>
       );
 
-      return { label, value: `${song.title};${song.artists[0]};${index}` };
+      return { label, value: JSON.stringify(song) };
     }),
     '',
   ];
 };
 
-const SongDropdownSearch = () => {
-  const DEBOUNCE_DELAY = 700;
+type Props = { onSelectCallback: (func: Song) => void };
+const SongDropdownSearch = ({ onSelectCallback }: Props) => {
+  const DEBOUNCE_DELAY = 500;
 
+  const [query, setQuery] = useState<string>('');
   const [options, setOptions] = useState<{ label: JSX.Element; value: string }[]>([]);
   const [error, setError] = useState('');
 
   const onSelect = (value: string) => {
-    console.log('onSelect', value);
+    const selectedSong: Song = JSON.parse(value);
+    setQuery(selectedSong.title);
+    onSelectCallback(selectedSong);
   };
 
-  const handleSearch = _.debounce(async query => {
+  // If you REALLY want to know what happens here:
+  // https://stackoverflow.com/a/59184678
+  const debouncedHandleSearchRef = useRef<() => Promise<void>>();
+  debouncedHandleSearchRef.current = async () => {
     const [foundSongs, searchError] = await searchResult(query);
     setOptions(foundSongs);
     setError(searchError);
-  }, DEBOUNCE_DELAY);
+  };
+  const handleSearch = useCallback(
+    _.debounce(() => debouncedHandleSearchRef.current(), DEBOUNCE_DELAY),
+    []
+  );
 
   const errorNotice = [
     {
@@ -79,6 +90,8 @@ const SongDropdownSearch = () => {
         options={error ? errorNotice : options}
         onSelect={onSelect}
         onSearch={handleSearch}
+        onChange={setQuery}
+        value={query}
       >
         {/* tslint:disable-next-line:max-line-length */}
         <Input.Search size="large" placeholder="Start typing song title..." enterButton />

@@ -1,10 +1,11 @@
-package pwr.piisw.backend.dtos;
+package pwr.piisw.backend.dtos.requests;
 
 import lombok.NonNull;
 import lombok.Value;
+import pwr.piisw.backend.entities.Song;
 
 @Value
-public class SongRequest {
+public class SongInfo {
     @NonNull String title;
     String artist;
     String album;
@@ -15,5 +16,10 @@ public class SongRequest {
     }
     private String nonNullString(String str) {
         return str == null ? "" : " " + str;
+    }
+
+    public boolean doesMatchWithSong(Song song) {
+        return title.equals(song.getTitle())
+            && artist.equals(song.getArtist());
     }
 }
