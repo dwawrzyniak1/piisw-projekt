@@ -28,23 +28,27 @@ public class SongRetrievalService {
 
     private Optional<Song> scrapeAndStore(SongQueryInfo songQueryInfo) {
         Optional<Song> song = retrieveSongFromGenius(songQueryInfo);
-        song = song.flatMap(s -> emptyOnSongsMismatch(songQueryInfo, s));
         song.ifPresent(songRepository::save);
         return song;
     }
 
     private Optional<Song> retrieveSongFromGenius(SongQueryInfo songQueryInfo) {
         Optional<GeniusSongInfo> songInfoOptional = proxy.searchForSong(songQueryInfo.toString());
+        
+        songInfoOptional = songInfoOptional
+                .flatMap(geniusResponse -> emptyOnInconsistency(songQueryInfo, geniusResponse));
 
         if (songInfoOptional.isPresent()) {
             GeniusSongInfo songInfo = songInfoOptional.get();
             String lyrics = scraper.scrapeLyrics(songInfo.getGeniusUrl(), 5);
 
             Song song = Song.builder()
-                    .title(songInfo.getTitle())
-                    .artist(songInfo.getArtist())
-                    .album(songQueryInfo.getAlbum()) // It is much easier to get album from request
-                    .photoUlr(songInfo.getPhotoUrl())
+                    .title(songQueryInfo.getTitle())
+                    .artist(songQueryInfo.getArtist())
+                    .album(songQueryInfo.getAlbum())
+                    .photoUlr(songQueryInfo.getSpotifyPhotoUlr())
+                    .spotifyUri(songQueryInfo.getSpotifyUri())
+                    .releaseYear(songQueryInfo.getReleaseYear())
                     .geniusLyrics(lyrics).build();
 
             return Optional.of(song);
@@ -53,8 +57,8 @@ public class SongRetrievalService {
         return Optional.empty();
     }
 
-    private Optional<Song> emptyOnSongsMismatch(SongQueryInfo request, Song retrieved) {
-        if (request.doesMatchWithSong(retrieved)) {
+    private Optional<GeniusSongInfo> emptyOnInconsistency(SongQueryInfo request, GeniusSongInfo retrieved) {
+        if (request.doesMatchWithGeniusResponse(retrieved)) {
             return Optional.of(retrieved);
         }
         return Optional.empty();

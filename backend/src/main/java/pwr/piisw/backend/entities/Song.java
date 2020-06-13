@@ -22,6 +22,8 @@ public class Song {
     String photoUlr;
     @Lob
     String geniusLyrics;
+    String spotifyUri;
+    int releaseYear;
     @OneToMany(mappedBy = "favouriteSong")
     Set<Favourite> likedBy;
 }
