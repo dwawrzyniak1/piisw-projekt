@@ -209,7 +209,7 @@ export default function Index(): ReactElement {
         body {
           padding: 0;
           margin: 0;
-          background-color: red !important;
+          background-color: ${Colors.backgroundColor}
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
             Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         }

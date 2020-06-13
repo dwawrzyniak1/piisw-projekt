@@ -1,12 +1,13 @@
 import Router from 'next/router';
 import { useEffect } from 'react';
-import { Layout } from 'antd';
 
-import { AUTH_ENDPOINT, CLIENT_ID } from '../constants/spotify';
+import { AUTH_ENDPOINT, CLIENT_ID, USER_ID_KEY } from '../constants/spotify';
 import { APP_HOME_URL, APP_BASE_URL, APP_LOGIN_URL } from '../constants/urls';
 import { extractAuthDataFromUrl } from '../utils/url';
-import { saveToLocalStorage, getAccessToken } from '../utils/localStorage';
+import { saveToLocalStorage, getAccessToken, getUserId } from '../utils/localStorage';
 import FullscreenSpinner from '../components/loading/FullscreenSpinner';
+import Colors from '../constants/colors';
+import { getUserInfo } from '../requests/spotify/user';
 
 const Login: React.FC = () => {
   const accessScopes = [
@@ -26,6 +27,12 @@ const Login: React.FC = () => {
   )}&response_type=token&show_dialog=true`;
 
   useEffect(() => {
+    (async () => {
+      gatherUserInfo();
+    })();
+  }, []);
+
+  const gatherUserInfo = async () => {
     if (Router.query.error !== undefined) {
       Router.push(APP_BASE_URL.replace('http:', '')); // Router doesn't accept protocol
     } else if (Router.asPath.includes('access_token=')) {
@@ -34,9 +41,13 @@ const Login: React.FC = () => {
     } else {
       Router.push(authUrl.replace('https:', ''));
     }
-  }, []);
+  };
 
-  return <FullscreenSpinner />;
+  return (
+    <body style={{ backgroundColor: Colors.backgroundColor }}>
+      <FullscreenSpinner />
+    </body>
+  );
 };
 
 export default Login;

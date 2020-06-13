@@ -19,7 +19,6 @@ export const getUserInfo = async (): Promise<[string, boolean, string]> => {
   if (response.status !== HTTP_OK) {
     return ['', false, response.statusText];
   }
-
   const data = await response.json();
   return [data.id, data.product === 'premium', ''];
 };
