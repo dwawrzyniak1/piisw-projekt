@@ -45,7 +45,7 @@ const searchResult = async (
 
 type Props = { onSelectCallback: (func: Song) => void };
 const SongDropdownSearch = ({ onSelectCallback }: Props) => {
-  const DEBOUNCE_DELAY = 700;
+  const DEBOUNCE_DELAY = 500;
 
   const [query, setQuery] = useState<string>('');
   const [options, setOptions] = useState<{ label: JSX.Element; value: string }[]>([]);
