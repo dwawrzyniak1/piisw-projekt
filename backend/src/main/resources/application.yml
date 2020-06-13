@@ -12,6 +12,10 @@ spring:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       generate-dll: true
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
 genius:
   api:
     token: DFnGiiGzLyEYS7mIQU22G_8Oq0mQAhvQ3oPKQuk2DW1RmEzljsbpMLBcXlG2F1Xs
