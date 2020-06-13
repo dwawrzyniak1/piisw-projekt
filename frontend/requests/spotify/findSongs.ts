@@ -33,6 +33,7 @@ const findSongs = async (query: string): Promise<[Song[], string]> => {
       popularity: track.popularity,
     });
   });
+
   return [songs, errorMessage];
 };
 
