@@ -7,6 +7,9 @@ import { Layout, Table, Card, Alert } from 'antd';
 import Colors from '../constants/colors';
 
 const Home: React.FC = () => {
+  const CARD_HEIGHT = '7.5em';
+  // React has a problem with this as an inline style
+
   const [lastSongs, setLastSongs] = useState<Song[]>([]);
   const [lastSongsLoadError, setLastSongsLoadError] = useState<string>('');
 
@@ -27,7 +30,7 @@ const Home: React.FC = () => {
   const renderSongs = (songs: Song[]) => {
     return (
       <div style={{ width: '90%', margin: 'auto' }}>
-        <div
+        {/* <div
           style={{
             width: '90%',
             margin: 'auto',
@@ -41,68 +44,76 @@ const Home: React.FC = () => {
           <span style={{ marginLeft: '10%' }}>Title</span>
           <span style={{ left: '46%', position: 'absolute' }}>Artist</span>
           <span style={{ left: '71%', position: 'absolute' }}>Album</span>
-        </div>
+        </div> */}
         {songs.map((song: Song, index: number) => (
           <Card
             style={{
-              backgroundColor: Colors.footerColor,
               marginBottom: '8px',
               maxHeight: '10%',
+              border: 0,
+            }}
+            bodyStyle={{
+              padding: 0,
             }}
           >
             <li key={index}>
-              <div style={{}}>
-                <img
-                  src={song.album.albumMediumCoverUrl}
-                  style={{
-                    marginRight: '3%',
-                    float: 'left',
-                    width: '7%',
-                    height: '7%',
-                  }}
-                ></img>
-                <span
-                  style={{
-                    float: 'left',
-                    verticalAlign: 'middle',
-                    fontSize: '17px',
-                    fontWeight: 'bold',
-                    maxWidth: '30%',
-                    textOverflow: 'ellipsis',
-                    lineHeight: '4.5',
-                    minHeight: '65px',
-                  }}
-                >
-                  {song.title}
-                </span>
-                <p
-                  style={{
-                    marginRight: '3%',
-                    marginLeft: '7%',
-                    float: 'left',
-                    lineHeight: '4.5',
-                    textAlign: 'left',
-                    fontSize: '16px',
-                    left: '38%',
-                    position: 'absolute',
-                    maxWidth: '30%',
-                  }}
-                >
-                  {song.artists.join(', ')}
-                </p>
-                <span
-                  style={{
-                    float: 'left',
-                    lineHeight: '4.5',
-                    left: '75%',
-                    maxWidth: '30%',
-                    position: 'absolute',
-                    fontSize: '16px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {song.album.title}
-                </span>
+              <div>
+                <div>
+                  <img
+                    src={song.album.albumMediumCoverUrl}
+                    style={{
+                      marginRight: '1.5em',
+                      float: 'left',
+                      width: CARD_HEIGHT,
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      height: CARD_HEIGHT,
+                    }}
+                  >
+                    <div style={{ marginBottom: 'auto', marginTop: 'auto' }}>
+                      <p
+                        style={{
+                          marginBottom: 0,
+                          fontSize: '19px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {song.title}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: '17px',
+                          marginBottom: 0,
+                        }}
+                      >
+                        {song.artists.join(', ')}
+                      </p>
+                      <p
+                        style={{
+                          marginBottom: 0,
+                          fontStyle: 'italic',
+                          fontSize: '16px',
+                        }}
+                      >
+                        {`${song.album.title} (${song.album.releaseDate?.split('-')[0]})`}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        marginBottom: 'auto',
+                        marginTop: 'auto',
+                        marginRight: '1em',
+                        backgroundColor: '#aaa',
+                      }}
+                    >
+                      PLAY
+                    </div>
+                  </div>
+                </div>
               </div>
             </li>
           </Card>
