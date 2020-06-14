@@ -11,22 +11,9 @@ import { SongInternal } from '../models/SongInternal';
 import Colors from '../constants/colors';
 
 import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
-
-const exampleData: Song = {
-  album: {
-    albumBigCoverUrl: 'https://i.scdn.co/image/ab67616d0000b273c4fc80e7cb3993d03ea4899a',
-    albumMediumCoverUrl: 'https://i.scdn.co/image/ab67616d00001e02c4fc80e7cb3993d03ea4899a',
-    albumSmallCoverUrl: 'https://i.scdn.co/image/ab67616d00004851c4fc80e7cb3993d03ea4899a',
-    releaseDate: '2020-03-07',
-    title: 'Art Brut 2',
-  },
-  artists: ['Dawid Podsiadło'],
-  popularity: 57,
-  spotifyUri: 'spotify:track:6KMvWbvvvD205ZhvXmjxVr',
-  title: 'Dżins',
-};
-import { getLastChosenSong } from '../utils/localStorage';
+import { getLastChosenSong, getUserId, setLastChosenSong } from '../utils/localStorage';
 import { playSong } from '../requests/spotify/player';
+import { fetchSpotify } from '../requests/spotify/fetchSpotify';
 
 const SongView: React.FC<void> = () => {
   const [songWithLyrics, setSongWithLyrics] = useState<SongInternal>(null);
@@ -35,24 +22,26 @@ const SongView: React.FC<void> = () => {
   const [checkedSong, setCheckedSong] = useState<Song>(null);
 
   useEffect(() => {
-    const exampleData = getLastChosenSong();
-
-    const songQuery: SongQuery = {
-      username: 'Damian',
-      song: {
-        title: exampleData.title,
-        artist: exampleData.artists[0],
-        album: exampleData.album['title'],
-        spotifyUri: exampleData.spotifyUri,
-        photoUrl: exampleData.album.albumBigCoverUrl,
-        releaseYear: Number(exampleData.album.releaseDate.split('-')[0]),
-      },
+    const lastSong = getLastChosenSong();
+    setSongWithLyrics(null);
+    setErrorMessage('');
+    const buildSongQuery = (song: Song): SongQuery => {
+      return {
+        username: getUserId(),
+        song: {
+          title: lastSong.title,
+          artist: lastSong.artists[0],
+          album: lastSong.album['title'],
+          spotifyUri: lastSong.spotifyUri,
+          photoUrl: lastSong.album.albumBigCoverUrl,
+          releaseYear: Number(lastSong.album.releaseDate.split('-')[0]),
+        },
+      };
     };
 
-    setCheckedSong(exampleData);
+    setCheckedSong(lastSong);
 
-    fetchSong(songQuery).then(result => {
-      console.log(result);
+    fetchSong(buildSongQuery(checkedSong)).then(result => {
       if (result.status === 404) {
         setErrorMessage(
           "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
@@ -66,11 +55,17 @@ const SongView: React.FC<void> = () => {
         setSongWithLyrics(song);
       }
     });
-  }, []);
+  }, [JSON.stringify(checkedSong)]);
 
   return (
     <>
-      <NavigationBar selectedMenuItem={4} />
+      <NavigationBar
+        selectedMenuItem={4}
+        dropdownSearchCallback={song => {
+          setLastChosenSong(song);
+          setCheckedSong(song);
+        }}
+      />
       <div className="song-view-container">
         <SongContainer backgroundUlr={checkedSong?.album.albumBigCoverUrl}>
           <div
