@@ -35,13 +35,19 @@ export const LyricsContainer: React.FC<LyricsProps> = props => {
 
       <style jsx>{`
         .lyrics-container {
-          height: 600px;
-          width: 400px;
-          background-color: white;
+          height: 550px;
+          width: 550px;
+          background-color: #333333;
+          color: white;
           z-index: 1;
+          overflow: scroll;
+          text-align: center;
           position: relative;
+          font-family: 'Roboto', sans-serif;
+          font-size: 16px;
           left: 300px;
-          top: 170px;
+          padding-top: 10px;
+          top: 130px;
           -webkit-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
           -moz-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
           box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);

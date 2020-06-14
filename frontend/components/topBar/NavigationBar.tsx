@@ -71,7 +71,7 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
             <a>Now played</a>
           </Menu.Item>
         </Menu>
-        <div style={{ marginLeft: '10px', marginRight: 20, float: 'right' }}>
+        <div style={{ marginLeft: '10px', marginRight: 30, float: 'right' }}>
           <SongDropdownSearch
             onSelectCallback={song => {
               if (dropdownSearchCallback) {
