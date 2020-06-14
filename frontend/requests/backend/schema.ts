@@ -1,22 +1,23 @@
 import { SongInternal } from '../../models/SongInternal';
 
 export interface SongQuery {
-  username: string,
-  song: SongInternal
+  username: string;
+  song: SongInternal;
 }
 
 export interface BackendSongResponse {
-  song: SongInternal,
-  favourite: boolean
+  song: SongInternal;
+  favourite: boolean;
+  status?: number;
 }
 
 export interface Pageable {
-  page: number,
-  size: number,
-  sort: Sort
+  page: number;
+  size: number;
+  sort: Sort;
 }
 
 export interface Sort {
-  by: string,
-  order: 'asc' | 'desc'
+  by: string;
+  order: 'asc' | 'desc';
 }

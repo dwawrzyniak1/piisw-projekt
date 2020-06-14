@@ -78,14 +78,28 @@ const Popular: React.FC = () => {
   };
 
   return (
-    <body style={{ backgroundColor: colors.backgroundColor }}>
+    <div style={{ backgroundColor: colors.backgroundColor }}>
       <div>
         <NavigationBar selectedMenuItem={3} />
-        <div style={{ margin: '4em' }}>
+        <div style={{ marginLeft: '12vw', marginRight: '12vw', marginTop: '2vh' }}>
           <Bar data={data} options={options} />
         </div>
       </div>
-    </body>
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          background-color: ${colors.backgroundColor};
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+      `}</style>
+    </div>
   );
 };
 
