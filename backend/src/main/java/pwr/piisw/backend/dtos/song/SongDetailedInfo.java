@@ -21,7 +21,7 @@ public class SongDetailedInfo {
         this.title = song.getTitle();
         this.artist = song.getArtist();
         this.album = song.getAlbum();
-        this.photoUrl = song.getPhotoUlr();
+        this.photoUrl = song.getPhotoUrl();
         this.spotifyUri = song.getSpotifyUri();
         this.releaseYear = song.getReleaseYear();
         this.lyrics = song.getGeniusLyrics();

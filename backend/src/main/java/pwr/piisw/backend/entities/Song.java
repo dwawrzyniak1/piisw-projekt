@@ -19,7 +19,7 @@ public class Song {
     String title;
     String artist;
     String album;
-    String photoUlr;
+    String photoUrl;
     @Lob
     String geniusLyrics;
     String spotifyUri;
