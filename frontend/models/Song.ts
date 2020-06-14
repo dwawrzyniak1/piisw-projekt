@@ -6,5 +6,6 @@ class Song {
   album: Album;
   popularity?: number;
   spotifyUri?: string;
+  timesChecked?: number;
 }
 export default Song;
