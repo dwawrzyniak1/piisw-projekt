@@ -67,11 +67,11 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
               <a>Statistics</a>
             </Link>
           </Menu.Item>
-            <Menu.Item key={4} style={selectedMenuItem === 4 ? SELECTED_MENU_ITEM_STYLE : {}}>
-                    <a>What am I listening to now?</a>
-            </Menu.Item>
+          <Menu.Item key={4} style={selectedMenuItem === 4 ? SELECTED_MENU_ITEM_STYLE : {}}>
+            <a>Now played</a>
+          </Menu.Item>
         </Menu>
-        <div style={{ marginLeft: '140px', float: 'left' }}>
+        <div style={{ marginLeft: '10px', marginRight: 20, float: 'right' }}>
           <SongDropdownSearch
             onSelectCallback={song => {
               if (dropdownSearchCallback) {
@@ -110,22 +110,22 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
           font-weight: bold;
         }
 
-         :global(.ant-menu-item-active a) {
+        :global(.ant-menu-item-active a) {
           color: white !important;
           font-weight: bold;
         }
 
-          :global(.ant-menu-item-active) {
+        :global(.ant-menu-item-active) {
           border-color: white !important;
         }
 
-         :global(.ant-menu-item-selected a) {
+        :global(.ant-menu-item-selected a) {
           color: white !important;
           font-weight: bold;
           // border-color: white !important;
         }
 
-           :global(.ant-menu-item-selected) {
+        :global(.ant-menu-item-selected) {
           border-color: white !important;
         }
       `}</style>

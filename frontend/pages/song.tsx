@@ -47,6 +47,9 @@ const SongView: React.FC<void> = () => {
           "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
         );
       }
+      if (result.status === 500) {
+        setErrorMessage('Not cool. Number of this error is 500...');
+      }
       if (typeof result === 'string') {
         setErrorMessage(result);
       } else {
@@ -77,7 +80,7 @@ const SongView: React.FC<void> = () => {
           >
             <h1 className="song-title">{checkedSong?.title}</h1>
             <h2 className="song-artist">{checkedSong?.artists[0]}</h2>
-            <h3 className="song-album">
+            <h3 className="song-album" style={checkedSong ? { opacity: 1 } : { opacity: 0 }}>
               {checkedSong?.album.title} ({checkedSong?.album.releaseDate.split('-')[0]})
             </h3>
           </div>

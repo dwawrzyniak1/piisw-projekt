@@ -4,7 +4,7 @@ import { SongInternal } from '../../models/SongInternal';
 import { CaretRightOutlined } from '@ant-design/icons/lib';
 
 interface SongListProps {
-  songs: SongInternal[]
+  songs: SongInternal[];
 }
 
 export const SongList: React.FC<SongListProps> = ({ songs }) => {
@@ -70,14 +70,14 @@ export const SongList: React.FC<SongListProps> = ({ songs }) => {
                         fontSize: '16px',
                       }}
                     >
-                      {`${song.album} (${song.releaseYear}`}
+                      {`${song.album} (${song.releaseYear})`}
                     </p>
                   </div>
                   <Button
                     className="song-button"
                     shape="circle"
                     size="large"
-                    icon={<CaretRightOutlined/>}
+                    icon={<CaretRightOutlined />}
                     style={{
                       marginTop: '35px',
                       marginRight: '40px',
