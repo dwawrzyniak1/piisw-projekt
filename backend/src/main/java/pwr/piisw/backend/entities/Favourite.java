@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -16,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Favourite {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     @ManyToOne
     @JoinColumn
