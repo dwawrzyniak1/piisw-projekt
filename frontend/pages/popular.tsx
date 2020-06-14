@@ -4,12 +4,14 @@ import { Bar } from 'react-chartjs-2';
 import colors, { chartColors } from '../constants/colors';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import Song from '../models/Song';
+import { fetchBackend } from '../requests/backend/fetchBackend';
+import { SongInternal } from '../models/SongInternal';
 
 const Popular: React.FC = () => {
   const FONT_COLOR = 'rgba(255, 255, 255, 0.9)';
   const GRID_COLOR = 'rgba(255, 255, 255, 0.2)';
 
-  const [lastSongs, setLastSongs] = useState<Song[]>([]);
+  const [lastSongs, setLastSongs] = useState<{ count: number; song: SongInternal }[]>([]);
   const [lastSongsLoadError, setLastSongsLoadError] = useState<string>('');
   useEffect(() => {
     (async () => {
@@ -18,16 +20,18 @@ const Popular: React.FC = () => {
   }, []);
 
   const loadRecentSongsInfo = async () => {
-    const [loadedSongs, error] = await get20lastPlayedSongs();
-    const loadedSongsPrepared = loadedSongs.slice(0, 5); // SORTING
+    const res = await fetchBackend('/statistics/checked', 'GET');
+    const loadedSongs: { count: number; song: SongInternal }[] = await res.json();
+
+    const loadedSongsPrepared = loadedSongs.sort((s1, s2) => s2.count - s1.count).slice(0, 5); // SORTING
     setLastSongs(loadedSongsPrepared);
   };
 
   const data = {
-    labels: lastSongs.map(s => s.title),
+    labels: lastSongs.map(s => s.song.title),
     datasets: [
       {
-        data: lastSongs.map((s, i) => i + 2 * 3),
+        data: lastSongs.map((s, i) => s.count),
         backgroundColor: chartColors.backgroundColor,
         borderColor: chartColors.borderColor,
         borderWidth: 1,
@@ -63,11 +67,11 @@ const Popular: React.FC = () => {
     tooltips: {
       callbacks: {
         title: v => {
-          const tooltipSong: Song = lastSongs.filter(song => {
+          const tooltipSong: { count: number; song: SongInternal } = lastSongs.filter(s => {
             // return song.timesChecked === Number(v[0].value) && song.title === v[0].label;
-            return song.title === v[0].label;
+            return s.song.title === v[0].label;
           })[0];
-          return [tooltipSong.title, tooltipSong.artists[0], '', tooltipSong.album.title];
+          return [tooltipSong.song.title, tooltipSong.song.artist, '', tooltipSong.song.album];
         },
       },
       backgroundColor: 'rgba(255, 255, 255, 0.7)',
