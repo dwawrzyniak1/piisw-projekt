@@ -17,13 +17,16 @@ public class SongRetrievalService {
     private final GeniusProxyService proxy;
     private final LyricsScraperService scraper;
     private final SongRepository songRepository;
+    private final Supervisor supervisor;
 
     @Transactional // lyrics are stored as lob in db
-    public Optional<Song> getSong(SongQueryInfo songQueryInfo) {
-        Optional<Song> storedSong = songRepository.findByTitleAndArtist(songQueryInfo.getTitle(), songQueryInfo.getArtist());
-        return storedSong.isPresent()
-            ? storedSong
-            : scrapeAndStore(songQueryInfo);
+    public Optional<Song> getSong(SongQueryInfo songQueryInfo) throws InterruptedException {
+        return supervisor.performSupervised(songQueryInfo, () -> {
+            Optional<Song> storedSong = songRepository.findByTitleAndArtist(songQueryInfo.getTitle(), songQueryInfo.getArtist());
+            return storedSong.isPresent()
+                    ? storedSong
+                    : scrapeAndStore(songQueryInfo);
+        });
     }
 
     private Optional<Song> scrapeAndStore(SongQueryInfo songQueryInfo) {
@@ -46,7 +49,7 @@ public class SongRetrievalService {
                     .title(songQueryInfo.getTitle())
                     .artist(songQueryInfo.getArtist())
                     .album(songQueryInfo.getAlbum())
-                    .photoUrl(songQueryInfo.getPhotoUlr())
+                    .photoUrl(songQueryInfo.getPhotoUrl())
                     .spotifyUri(songQueryInfo.getSpotifyUri())
                     .releaseYear(songQueryInfo.getReleaseYear())
                     .geniusLyrics(lyrics).build();

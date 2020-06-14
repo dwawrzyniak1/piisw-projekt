@@ -7,6 +7,7 @@ import Colors from '../../constants/colors';
 import SongDropdownSearch from '../../components/searching/SongDropdownSearch';
 import { setLastChosenSong } from '../../utils/localStorage';
 import Song from '../../models/Song';
+import { getNowPlaying } from '../../requests/spotify/player';
 
 type Props = { selectedMenuItem: number; dropdownSearchCallback?: (song: Song) => void };
 const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX.Element => {
@@ -68,7 +69,9 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
             </Link>
           </Menu.Item>
           <Menu.Item key={4} style={selectedMenuItem === 4 ? SELECTED_MENU_ITEM_STYLE : {}}>
-            <a>Now played</a>
+            <Link href={{ pathname: '/song', query: { now: 'true' } }}>
+              <a>Now played</a>
+            </Link>
           </Menu.Item>
         </Menu>
         <div style={{ marginLeft: '10px', marginRight: 30, float: 'right' }}>

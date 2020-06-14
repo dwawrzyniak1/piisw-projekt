@@ -1,6 +1,6 @@
 package pwr.piisw.backend.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,14 +8,14 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Getter
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Favourite {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @NonNull User user;
     @ManyToOne

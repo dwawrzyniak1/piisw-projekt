@@ -9,10 +9,11 @@ import { LyricsContainer } from '../components/song/LyricsContainer';
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons/lib';
 import { SongInternal } from '../models/SongInternal';
 import Colors from '../constants/colors';
+import Router from 'next/router';
 
 import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
 import { getLastChosenSong, getUserId, setLastChosenSong } from '../utils/localStorage';
-import { playSong } from '../requests/spotify/player';
+import { playSong, getNowPlaying } from '../requests/spotify/player';
 import { fetchSpotify } from '../requests/spotify/fetchSpotify';
 
 const SongView: React.FC<void> = () => {
@@ -22,60 +23,49 @@ const SongView: React.FC<void> = () => {
   const [checkedSong, setCheckedSong] = useState<Song>(null);
 
   useEffect(() => {
-    const lastSong = getLastChosenSong();
-    setSongWithLyrics(null);
-    setErrorMessage('');
-    const buildSongQuery = (song: Song): SongQuery => {
-      return {
-        username: getUserId(),
-        song: {
-          title: lastSong.title,
-          artist: lastSong.artists[0],
-          album: lastSong.album['title'],
-          spotifyUri: lastSong.spotifyUri,
-          photoUrl: lastSong.album.albumBigCoverUrl,
-          releaseYear: Number(lastSong.album.releaseDate.split('-')[0]),
-        },
+    if (checkedSong === null) {
+      if (Router.query.now) {
+        getNowPlaying().then(res => {
+          setLastChosenSong(res[0]);
+        });
+      }
+      const lastSong = getLastChosenSong();
+      setSongWithLyrics(null);
+      setErrorMessage('');
+      const buildSongQuery = (): SongQuery => {
+        return {
+          username: getUserId(),
+          song: {
+            title: lastSong.title,
+            artist: lastSong.artists[0],
+            album: lastSong.album['title'],
+            spotifyUri: lastSong.spotifyUri,
+            photoUrl: lastSong.album.albumBigCoverUrl,
+            releaseYear: Number(lastSong.album.releaseDate.split('-')[0]),
+          },
+        };
       };
-    };
 
-    const example = {
-      username: getUserId(),
-      song: {
-        id: 26,
-        title: 'Rust in Peace...Polaris',
-        artist: 'Megadeth',
-        album: 'string',
-        photoUrl: 'string',
-        spotifyUri: 'string',
-        releaseYear: 0,
-        lyrics: "[Rust in Peace]\n\n[Verse 1]\nTremble, you weaklings, cower in fear\nI am your ruler - land, sea, and air\nImmense in my girth, erect I stand tall\nI am a nuclear murderer, I am Polaris\nReady to pounce at the touch of a button\nMy system's locked in for military gluttons\nI rule on land, air, and sea\nI pass judgment on humanity\nWinds blow from the bowels of Hell\nWill we give warning? Only time will tell\nSatan rears his ugly head\nTo spit into the wind\n\n[Chorus]\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nLaunch the Polaris\nThe end doesn't scare us\nWhen will this cease?\nThe warheads will all rust in peace\n\n[Verse 2]\nBomb shelters filled to the brim\nHeh, survival, such a silly whim\nWorld leaders sell missiles cheap\nYour stomach turns, your flesh creeps\nI rule land, air, and sea\nPass judgment on humanity\nWinds blow from the bowels of Hell\nWill we give warning? Well only time will tell\n\n[Chorus]\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nLaunch the Polaris\nThe end doesn't scare us\nWhen will this cease?\nThe warheads will all rust in peace\n\n[Verse 3]\nHigh priest of holocaust, fire from the sea\nNuclear winter, spreading disease\nThe day of final conflict, all pay the price\nThe third world war rapes peace, takes life\nBack to the start, die in the pyre\nWhen the Earth was cold as ice\nTotal dismay as the sun passed away\nAnd the days were black as night\n\n[Chorus]\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nI spread disease like a dog, discharge my payload\nA mile high, rotten egg air of death wrestles your nostrils\nLaunch the Polaris\nIt doesn't scare us\nWhen will this cease?\nThe warheads will all rust in peace\n\n[Polaris]\n\n[Outro]\nEradication of\nEarth's population loves Polaris\nEradication of\nEarth's population loves Polaris\n\n[Instrumental]\n\nEradication of\nEarth's population loves Polaris\nEradication of\nEarth's population loves Polaris"
-      },
-      errorMessage: null,
-      favourite: false
-    };
+      setCheckedSong(lastSong);
 
-    setCheckedSong(lastSong);
-
-    // fetchSong(buildSongQuery(checkedSong)).then(result => {
-    //   if (result.status === 404) {
-    //     setErrorMessage(
-    // tslint:disable-next-line:max-line-length
-    //       "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
-    //     );
-    //   }
-    //   if (result.status === 500) {
-    //     setErrorMessage('Not cool. Number of this error is 500...');
-    //   }
-    //   if (typeof result === 'string') {
-    //     setErrorMessage(result);
-    //   } else {
-    //     const { favourite, song } = result;
-    //     setIsFavourite(favourite);
-    //     setSongWithLyrics(song);
-    setSongWithLyrics(example.song);
-    //   }
-    // });
+      fetchSong(buildSongQuery()).then(result => {
+        if (result.status === 404) {
+          setErrorMessage(
+            "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
+          );
+        }
+        if (result.status === 500) {
+          setErrorMessage('Not cool. Number of this error is 500...');
+        }
+        if (typeof result === 'string') {
+          setErrorMessage(result);
+        } else {
+          const { favourite, song } = result;
+          setIsFavourite(favourite);
+          setSongWithLyrics(song);
+        }
+      });
+    }
   }, [JSON.stringify(checkedSong)]);
 
   return (
