@@ -9,10 +9,11 @@ import { LyricsContainer } from '../components/song/LyricsContainer';
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons/lib';
 import { SongInternal } from '../models/SongInternal';
 import Colors from '../constants/colors';
+import Router from 'next/router';
 
 import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
 import { getLastChosenSong, getUserId, setLastChosenSong } from '../utils/localStorage';
-import { playSong } from '../requests/spotify/player';
+import { playSong, getNowPlaying } from '../requests/spotify/player';
 import { fetchSpotify } from '../requests/spotify/fetchSpotify';
 
 const SongView: React.FC<void> = () => {
@@ -22,10 +23,15 @@ const SongView: React.FC<void> = () => {
   const [checkedSong, setCheckedSong] = useState<Song>(null);
 
   useEffect(() => {
+    if (Router.query.now) {
+      getNowPlaying().then(res => {
+        setLastChosenSong(res[0]);
+      });
+    }
     const lastSong = getLastChosenSong();
     setSongWithLyrics(null);
     setErrorMessage('');
-    const buildSongQuery = (song: Song): SongQuery => {
+    const buildSongQuery = (): SongQuery => {
       return {
         username: getUserId(),
         song: {
@@ -41,7 +47,7 @@ const SongView: React.FC<void> = () => {
 
     setCheckedSong(lastSong);
 
-    fetchSong(buildSongQuery(checkedSong)).then(result => {
+    fetchSong(buildSongQuery()).then(result => {
       if (result.status === 404) {
         setErrorMessage(
           "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
