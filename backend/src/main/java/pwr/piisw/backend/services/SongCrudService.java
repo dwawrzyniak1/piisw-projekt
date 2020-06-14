@@ -29,7 +29,7 @@ public class SongCrudService {
         Song song = getSongOrThrow(songId);
         User user = getUserOrThrow(username);
         Optional<Favourite> favouriteOptional = favouritesRepository.findByFavouriteSongAndUser(song, user);
-        return favouriteOptional.orElse(favouritesRepository.save(new Favourite(user, song, new Date())));
+        return favouriteOptional.orElseGet(() -> favouritesRepository.save(new Favourite(user, song, new Date())));
     }
 
     public void markAsChecked(Song song, String username) {
@@ -54,4 +54,10 @@ public class SongCrudService {
     }
 
 
+    public void deleteFromFavourite(Long songId, String username) {
+        Song song = getSongOrThrow(songId);
+        User user = getUserOrThrow(username);
+        Optional<Favourite> favouriteOptional = favouritesRepository.findByFavouriteSongAndUser(song, user);
+        favouriteOptional.ifPresent(favouritesRepository::delete);
+    }
 }

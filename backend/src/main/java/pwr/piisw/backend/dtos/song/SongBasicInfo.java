@@ -12,6 +12,8 @@ public class SongBasicInfo {
     String artist;
     String album;
     String photoUrl;
+    String spotifyUri;
+    int releaseYear;
 
     public SongBasicInfo(Song song) {
         this.id = song.getId();
@@ -19,5 +21,7 @@ public class SongBasicInfo {
         this.artist = song.getArtist();
         this.album = song.getAlbum();
         this.photoUrl = song.getPhotoUlr();
+        this.spotifyUri = song.getSpotifyUri();
+        this.releaseYear = song.getReleaseYear();
     }
 }

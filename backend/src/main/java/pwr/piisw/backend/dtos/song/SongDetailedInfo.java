@@ -12,6 +12,8 @@ public class SongDetailedInfo {
     String artist;
     String album;
     String photoUrl;
+    String spotifyUri;
+    int releaseYear;
     String lyrics;
 
     public SongDetailedInfo(Song song) {
@@ -20,6 +22,8 @@ public class SongDetailedInfo {
         this.artist = song.getArtist();
         this.album = song.getAlbum();
         this.photoUrl = song.getPhotoUlr();
+        this.spotifyUri = song.getSpotifyUri();
+        this.releaseYear = song.getReleaseYear();
         this.lyrics = song.getGeniusLyrics();
     }
 }

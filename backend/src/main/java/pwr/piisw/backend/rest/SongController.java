@@ -51,4 +51,15 @@ public class SongController {
         crudService.markAsFavourite(songId, username);
         return ResponseEntity.ok("succeed");
     }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully deleted song from favourite or song was not marked as favourite"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "404", description = "Song not found")
+    })
+    @DeleteMapping("/{songId}")
+    public ResponseEntity<String> deleteFromFavourite(@PathVariable Long songId, @RequestBody String username) {
+        crudService.deleteFromFavourite(songId, username);
+        return ResponseEntity.ok("succeed");
+    }
 }

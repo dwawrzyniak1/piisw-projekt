@@ -14,7 +14,7 @@ public class SongQueryInfo {
     @NonNull String artist;
     @NonNull String album;
     @NonNull String spotifyUri;
-    @NonNull String spotifyPhotoUlr;
+    @NonNull String photoUlr;
     @NonNull int releaseYear;
 
     public String toString() {
