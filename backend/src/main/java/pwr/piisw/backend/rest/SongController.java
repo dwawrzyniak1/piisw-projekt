@@ -35,7 +35,7 @@ public class SongController {
     })
     @PostMapping
     @Transactional
-    public ResponseEntity<SongDetailsResponse> checkSongDetails(@RequestBody SongDetailsRequest songDetailsRequest) {
+    public ResponseEntity<SongDetailsResponse> checkSongDetails(@RequestBody SongDetailsRequest songDetailsRequest) throws InterruptedException {
         Optional<Song> song = retrievalService.getSong(songDetailsRequest.getSong());
         song.ifPresent(s -> crudService.markAsChecked(s, songDetailsRequest.getUsername()));
         Optional<SongDetailsResponse> responseBody = song.map(s -> new SongDetailsResponse(s, songDetailsRequest.getUsername()));
