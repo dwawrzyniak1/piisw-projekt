@@ -46,8 +46,8 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
           defaultSelectedKeys={[selectedMenuItem.toString()]}
           style={{
             backgroundColor: Colors.primaryColor,
-            marginLeft: '140px',
-            maxWidth: '330px',
+            marginLeft: '60px',
+            maxWidth: '600px',
             float: 'left',
           }}
         >
@@ -57,7 +57,7 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
             </Link>
           </Menu.Item>
           <Menu.Item key={2} style={selectedMenuItem === 2 ? SELECTED_MENU_ITEM_STYLE : {}}>
-            Favorites
+            <a>Favorites</a>
           </Menu.Item>
 
           <Menu.Item key={3} style={selectedMenuItem === 3 ? SELECTED_MENU_ITEM_STYLE : {}}>
@@ -65,8 +65,11 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
               <a>Statistics</a>
             </Link>
           </Menu.Item>
+            <Menu.Item key={4} style={selectedMenuItem === 4 ? SELECTED_MENU_ITEM_STYLE : {}}>
+                    <a>What am I listening to now?</a>
+            </Menu.Item>
         </Menu>
-        <div style={{ marginLeft: '200px', float: 'left' }}>
+        <div style={{ marginLeft: '140px', float: 'left' }}>
           <SongDropdownSearch
             onSelectCallback={song => {
               if (dropdownSearchCallback) {
@@ -76,9 +79,6 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
               }
             }}
           />
-        </div>
-        <div>
-          <a>What am I listening to now?</a>
         </div>
       </Header>
       {/*<div>*/}
@@ -106,6 +106,25 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
         :global(.ant-menu-item) {
           color: black;
           font-weight: bold;
+        }
+
+         :global(.ant-menu-item-active a) {
+          color: white !important;
+          font-weight: bold;
+        }
+
+          :global(.ant-menu-item-active) {
+          border-color: white !important;
+        }
+
+         :global(.ant-menu-item-selected a) {
+          color: white !important;
+          font-weight: bold;
+          // border-color: white !important;
+        }
+
+           :global(.ant-menu-item-selected) {
+          border-color: white !important;
         }
       `}</style>
     </div>

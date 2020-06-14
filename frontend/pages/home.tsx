@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import { getUserInfo } from '../requests/spotify/user';
 import Song from '../models/Song';
-import { Alert, Card, Layout } from 'antd';
+import { Alert, Button, Card, Layout } from 'antd';
 import Colors from '../constants/colors';
 import NavigationBar from '../components/topBar/NavigationBar';
 import { getUserId, saveToLocalStorage } from '../utils/localStorage';
 import { USER_ID_KEY } from '../constants/spotify';
+import { CaretRightOutlined } from '@ant-design/icons/lib';
+import { playSong } from '../requests/spotify/player';
 
 const Home: React.FC = () => {
   const CARD_HEIGHT = '7.5em';
@@ -100,16 +102,16 @@ const Home: React.FC = () => {
                         {`${song.album.title} (${song.album.releaseDate?.split('-')[0]})`}
                       </p>
                     </div>
-                    <div
-                      style={{
-                        marginBottom: 'auto',
-                        marginTop: 'auto',
-                        marginRight: '1em',
-                        backgroundColor: '#aaa',
-                      }}
-                    >
-                      PLAY
-                    </div>
+                    <Button
+                        className="song-button"
+                        shape="circle"
+                        size="large"
+                        icon={<CaretRightOutlined />}
+                        style={{
+                          marginTop: '35px',
+                          marginRight: '40px',
+                        }}
+                    />
                   </div>
                 </div>
               </div>
@@ -133,7 +135,7 @@ const Home: React.FC = () => {
           }}
         >
           <h2 style={{ color: 'white', marginTop: '20px', marginLeft: '5%', fontSize: '21px' }}>
-            20 last played songs:
+            Last played songs:
           </h2>
           <div>{renderSongs(lastSongs)}</div>
         </Content>

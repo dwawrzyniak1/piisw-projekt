@@ -89,7 +89,7 @@ const SongDropdownSearch = ({ onSelectCallback }: Props) => {
       <AutoComplete
         dropdownMatchSelectWidth={252}
         style={{
-          width: '550px',
+          width: '450px',
           // position: 'absolute',
           marginTop: '14px',
         }}

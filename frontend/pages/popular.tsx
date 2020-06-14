@@ -81,7 +81,7 @@ const Popular: React.FC = () => {
     <div style={{ backgroundColor: colors.backgroundColor }}>
       <div>
         <NavigationBar selectedMenuItem={3} />
-        <div style={{ marginLeft: '12vw', marginRight: '12vw', marginTop: '2vh' }}>
+        <div style={{ marginLeft: '12vw', marginRight: '12vw', marginTop: '3vw' }}>
           <Bar data={data} options={options} />
         </div>
       </div>
