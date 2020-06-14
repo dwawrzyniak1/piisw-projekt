@@ -1,12 +1,11 @@
 import React from 'react';
 import Router from 'next/router';
 import { Layout, Menu } from 'antd';
+import Link from 'next/link';
 
 import Colors from '../../constants/colors';
-import { playSong } from '../../requests/spotify/player';
 import SongDropdownSearch from '../../components/searching/SongDropdownSearch';
 import { setLastChosenSong } from '../../utils/localStorage';
-import { APP_SONG_URL } from '../../constants/urls';
 
 type Props = { selectedMenuItem: number };
 const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
@@ -52,26 +51,32 @@ const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
           }}
         >
           <Menu.Item key={1} style={selectedMenuItem === 1 ? SELECTED_MENU_ITEM_STYLE : {}}>
-            Last played
+            <Link href="/home">
+              <a>Last played</a>
+            </Link>
           </Menu.Item>
-          <Menu.Item
-            key={2}
-            style={selectedMenuItem === 2 ? SELECTED_MENU_ITEM_STYLE : {}}
-            color="red"
-          >
+          <Menu.Item key={2} style={selectedMenuItem === 2 ? SELECTED_MENU_ITEM_STYLE : {}}>
             Favorites
           </Menu.Item>
+
           <Menu.Item key={3} style={selectedMenuItem === 3 ? SELECTED_MENU_ITEM_STYLE : {}}>
-            Statistics
+            <Link href="/popular">
+              <a>Statistics</a>
+            </Link>
           </Menu.Item>
         </Menu>
         <div style={{ marginLeft: '200px', float: 'left' }}>
           <SongDropdownSearch
             onSelectCallback={song => {
               setLastChosenSong(song);
-              Router.push(APP_SONG_URL.replace('http:', ''));
+              Router.prefetch('/song');
+              Router.replace('/song');
+              // Router.replace(APP_SONG_URL.replace('http:', ''));
             }}
           />
+        </div>
+        <div>
+          <a>What am I listening to now?</a>
         </div>
       </Header>
       {/*<div>*/}

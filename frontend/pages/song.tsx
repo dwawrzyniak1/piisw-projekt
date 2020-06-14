@@ -8,8 +8,9 @@ import { SongContainer } from '../components/song/SongContainer';
 import { LyricsContainer } from '../components/song/LyricsContainer';
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons/lib';
 import { SongInternal } from '../models/SongInternal';
-import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
+import Colors from '../constants/colors';
 
+import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
 
 const exampleData: Song = {
   album: {
@@ -36,17 +37,6 @@ const SongView: React.FC<void> = () => {
   useEffect(() => {
     const exampleData = getLastChosenSong();
 
-  const songQuery: SongQuery = {
-    username: 'Damian',
-    song: {
-      title: exampleData.title,
-      artist: exampleData.artists[0],
-      album: exampleData.album['title'],
-      spotifyUri: exampleData.spotifyUri,
-      photoUlr: exampleData.album.albumBigCoverUrl,
-      releaseYear: Number(exampleData.album.releaseDate.split('-')[0]),
-    },
-  };
     const songQuery: SongQuery = {
       username: 'Damian',
       song: {
@@ -54,7 +44,7 @@ const SongView: React.FC<void> = () => {
         artist: exampleData.artists[0],
         album: exampleData.album['title'],
         spotifyUri: exampleData.spotifyUri,
-        spotifyPhotoUlr: exampleData.album.albumBigCoverUrl,
+        photoUrl: exampleData.album.albumBigCoverUrl,
         releaseYear: Number(exampleData.album.releaseDate.split('-')[0]),
       },
     };
@@ -158,6 +148,21 @@ const SongView: React.FC<void> = () => {
         .song-view-container {
           position: relative;
           right: 50px;
+        }
+      `}</style>
+
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          background-color: ${Colors.backgroundColor};
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        }
+
+        * {
+          box-sizing: border-box;
         }
       `}</style>
     </>
