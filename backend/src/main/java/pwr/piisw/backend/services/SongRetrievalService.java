@@ -46,7 +46,7 @@ public class SongRetrievalService {
                     .title(songQueryInfo.getTitle())
                     .artist(songQueryInfo.getArtist())
                     .album(songQueryInfo.getAlbum())
-                    .photoUlr(songQueryInfo.getSpotifyPhotoUlr())
+                    .photoUlr(songQueryInfo.getPhotoUlr())
                     .spotifyUri(songQueryInfo.getSpotifyUri())
                     .releaseYear(songQueryInfo.getReleaseYear())
                     .geniusLyrics(lyrics).build();

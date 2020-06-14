@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Song from '../models/Song';
 import NavigationBar from '../components/topBar/NavigationBar';
-import { fetchSong } from '../requests/backend/fetchSong';
-import { SongQuery, SongWithLyrics } from '../requests/backend/schema';
+import { deleteFromFavourite, fetchSong, markAsFavourite } from '../requests/backend/song';
+import { SongQuery } from '../requests/backend/schema';
 import { Button } from 'antd';
 import { SongContainer } from '../components/song/SongContainer';
 import { LyricsContainer } from '../components/song/LyricsContainer';
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons/lib';
+import { SongInternal } from '../models/SongInternal';
+import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
 
 
 const exampleData: Song = {
@@ -24,7 +26,7 @@ const exampleData: Song = {
 };
 
 const SongView: React.FC<void> = () => {
-  const [songWithLyrics, setSongWithLyrics] = useState<SongWithLyrics>(null);
+  const [songWithLyrics, setSongWithLyrics] = useState<SongInternal>(null);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -35,21 +37,22 @@ const SongView: React.FC<void> = () => {
       artist: exampleData.artists[0],
       album: exampleData.album['title'],
       spotifyUri: exampleData.spotifyUri,
-      spotifyPhotoUlr: exampleData.album.albumBigCoverUrl,
+      photoUlr: exampleData.album.albumBigCoverUrl,
       releaseYear: parseInt(exampleData.album.releaseDate.split('-')[0]),
     },
   };
 
   useEffect(() => {
-    fetchSong(songQuery)
+    deleteFromFavourite("Damian", 1)
       .then(result => {
-        if (typeof result === 'string') {
-          setErrorMessage(result);
-        } else {
-          const { favourite, song } = result;
-          setIsFavourite(favourite);
-          setSongWithLyrics(song);
-        }
+        // if (typeof result === 'string') {
+        //   setErrorMessage(result);
+        // } else {
+        //   const { favourite, song } = result;
+        //   setIsFavourite(favourite);
+        //   setSongWithLyrics(song);
+        // }
+        console.log(result);
       });
   }, []);
 

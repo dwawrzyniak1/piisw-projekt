@@ -1,9 +1,9 @@
 import React from 'react';
-import { SongWithLyrics } from '../../requests/backend/schema';
 import FullscreenSpinner from '../loading/FullscreenSpinner';
+import { SongInternal } from '../../models/SongInternal';
 
 interface LyricsProps {
-  song: SongWithLyrics,
+  song: SongInternal,
   errorMessage?: string
 }
 
