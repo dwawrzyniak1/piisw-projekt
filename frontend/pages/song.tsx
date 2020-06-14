@@ -33,6 +33,10 @@ const SongView: React.FC<void> = () => {
       setSongWithLyrics(null);
       setErrorMessage('');
       const buildSongQuery = (): SongQuery => {
+        if (lastSong === null) {
+          setErrorMessage('You are not playing anything now.');
+          return null;
+        }
         return {
           username: getUserId(),
           song: {
@@ -50,9 +54,7 @@ const SongView: React.FC<void> = () => {
 
       fetchSong(buildSongQuery()).then(result => {
         if (result.status === 404) {
-          setErrorMessage(
-            "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
-          );
+          setErrorMessage("Unfortunetly we couldn't find lyrics for this song.");
         }
         if (result.status === 500) {
           setErrorMessage('Not cool. Number of this error is 500...');
@@ -77,7 +79,7 @@ const SongView: React.FC<void> = () => {
           setCheckedSong(song);
         }}
       />
-      <div  style={{ marginTop: '20px' }} className="song-view-container">
+      <div style={{ marginTop: '20px' }} className="song-view-container">
         <SongContainer backgroundUlr={checkedSong?.album.albumBigCoverUrl}>
           <div
             style={{

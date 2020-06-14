@@ -3,6 +3,8 @@ import { Button, Card } from 'antd';
 import { SongInternal } from '../../models/SongInternal';
 import { CaretRightOutlined } from '@ant-design/icons/lib';
 import Colors from '../../constants/colors';
+import { songInternalToSong } from '../../models/Song';
+import { playSong } from '../../requests/spotify/player';
 
 interface SongListProps {
   songs: SongInternal[];
@@ -83,6 +85,7 @@ export const SongList: React.FC<SongListProps> = ({ songs }) => {
                       marginTop: '35px',
                       marginRight: '40px',
                     }}
+                    onClick={() => playSong(songInternalToSong(song))}
                   />
                 </div>
               </div>

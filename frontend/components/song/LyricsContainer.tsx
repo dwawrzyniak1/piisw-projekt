@@ -10,8 +10,8 @@ export const LyricsContainer: React.FC<LyricsProps> = props => {
   const { song, errorMessage } = props;
 
   const formatLyrics = (lyrics: string) => {
-    return lyrics.split('\n').map(sentence => (
-      <span>
+    return lyrics.split('\n').map((sentence, i) => (
+      <span key={i}>
         {sentence}
         <br />
       </span>
