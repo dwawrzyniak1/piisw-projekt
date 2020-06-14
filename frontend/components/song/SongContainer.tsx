@@ -28,7 +28,11 @@ export const SongContainer: React.FC<ContainerProps> = props => {
         }
         .song-container::before {
           content: '';
-          background-color: rgba(100, 95, 94, 0.75);
+          background: linear-gradient(
+            rgba(0, 0, 0, 0.6) 5%,
+            rgba(0, 0, 0, 0) 40%,
+            rgba(0, 0, 0, 0)
+          );
           height: 100%;
           width: 100%;
           position: absolute;
