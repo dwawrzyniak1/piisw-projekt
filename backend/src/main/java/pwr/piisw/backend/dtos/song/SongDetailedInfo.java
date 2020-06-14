@@ -1,9 +1,11 @@
 package pwr.piisw.backend.dtos.song;
 
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pwr.piisw.backend.entities.Song;
 
-@Value
+@Data
+@NoArgsConstructor
 public class SongDetailedInfo {
     long id;
     String title;

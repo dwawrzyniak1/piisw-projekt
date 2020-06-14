@@ -1,9 +1,11 @@
 package pwr.piisw.backend.dtos.inbound;
 
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pwr.piisw.backend.dtos.song.SongQueryInfo;
 
-@Value
+@Data
+@NoArgsConstructor
 public class SongDetailsRequest {
     String username;
     SongQueryInfo song;

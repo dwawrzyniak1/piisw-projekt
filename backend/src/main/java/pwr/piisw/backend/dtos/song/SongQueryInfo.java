@@ -1,12 +1,14 @@
 package pwr.piisw.backend.dtos.song;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Value;
 import pwr.piisw.backend.dtos.genius.GeniusSongInfo;
 
 import java.util.Arrays;
 
-@Value
+@Data
+@NoArgsConstructor
 public class SongQueryInfo {
     @NonNull String title;
     @NonNull String artist;

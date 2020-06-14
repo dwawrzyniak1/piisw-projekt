@@ -1,6 +1,7 @@
 package pwr.piisw.backend.dtos.outbound;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pwr.piisw.backend.dtos.song.SongDetailedInfo;
 import pwr.piisw.backend.entities.Favourite;
 import pwr.piisw.backend.entities.Song;
@@ -8,6 +9,7 @@ import pwr.piisw.backend.entities.Song;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 public class SongDetailsResponse {
     boolean isFavourite;
     SongDetailedInfo song;
@@ -20,7 +22,4 @@ public class SongDetailsResponse {
         this.song = new SongDetailedInfo(song);
     }
 
-    public SongDetailsResponse(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 }
