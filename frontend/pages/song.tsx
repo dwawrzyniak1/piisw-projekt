@@ -1,17 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Song from '../models/Song';
 import NavigationBar from '../components/topBar/NavigationBar';
-import { fetchSong } from '../requests/backend/fetchSong';
-import { SongQuery, SongWithLyrics } from '../requests/backend/schema';
+import { fetchSong } from '../requests/backend/song';
+import { SongQuery } from '../requests/backend/schema';
 import { Button } from 'antd';
 import { SongContainer } from '../components/song/SongContainer';
 import { LyricsContainer } from '../components/song/LyricsContainer';
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons/lib';
+import { SongInternal } from '../models/SongInternal';
+import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
+
+
+const exampleData: Song = {
+  album: {
+    albumBigCoverUrl: 'https://i.scdn.co/image/ab67616d0000b273c4fc80e7cb3993d03ea4899a',
+    albumMediumCoverUrl: 'https://i.scdn.co/image/ab67616d00001e02c4fc80e7cb3993d03ea4899a',
+    albumSmallCoverUrl: 'https://i.scdn.co/image/ab67616d00004851c4fc80e7cb3993d03ea4899a',
+    releaseDate: '2020-03-07',
+    title: 'Art Brut 2',
+  },
+  artists: ['Dawid Podsiadło'],
+  popularity: 57,
+  spotifyUri: 'spotify:track:6KMvWbvvvD205ZhvXmjxVr',
+  title: 'Dżins',
+};
 import { getLastChosenSong } from '../utils/localStorage';
 import { playSong } from '../requests/spotify/player';
 
 const SongView: React.FC<void> = () => {
-  const [songWithLyrics, setSongWithLyrics] = useState<SongWithLyrics>(null);
+  const [songWithLyrics, setSongWithLyrics] = useState<SongInternal>(null);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [checkedSong, setCheckedSong] = useState<Song>(null);
@@ -19,6 +36,17 @@ const SongView: React.FC<void> = () => {
   useEffect(() => {
     const exampleData = getLastChosenSong();
 
+  const songQuery: SongQuery = {
+    username: 'Damian',
+    song: {
+      title: exampleData.title,
+      artist: exampleData.artists[0],
+      album: exampleData.album['title'],
+      spotifyUri: exampleData.spotifyUri,
+      photoUlr: exampleData.album.albumBigCoverUrl,
+      releaseYear: Number(exampleData.album.releaseDate.split('-')[0]),
+    },
+  };
     const songQuery: SongQuery = {
       username: 'Damian',
       song: {
