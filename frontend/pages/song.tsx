@@ -23,47 +23,49 @@ const SongView: React.FC<void> = () => {
   const [checkedSong, setCheckedSong] = useState<Song>(null);
 
   useEffect(() => {
-    if (Router.query.now) {
-      getNowPlaying().then(res => {
-        setLastChosenSong(res[0]);
+    if (checkedSong === null) {
+      if (Router.query.now) {
+        getNowPlaying().then(res => {
+          setLastChosenSong(res[0]);
+        });
+      }
+      const lastSong = getLastChosenSong();
+      setSongWithLyrics(null);
+      setErrorMessage('');
+      const buildSongQuery = (): SongQuery => {
+        return {
+          username: getUserId(),
+          song: {
+            title: lastSong.title,
+            artist: lastSong.artists[0],
+            album: lastSong.album['title'],
+            spotifyUri: lastSong.spotifyUri,
+            photoUrl: lastSong.album.albumBigCoverUrl,
+            releaseYear: Number(lastSong.album.releaseDate.split('-')[0]),
+          },
+        };
+      };
+
+      setCheckedSong(lastSong);
+
+      fetchSong(buildSongQuery()).then(result => {
+        if (result.status === 404) {
+          setErrorMessage(
+            "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
+          );
+        }
+        if (result.status === 500) {
+          setErrorMessage('Not cool. Number of this error is 500...');
+        }
+        if (typeof result === 'string') {
+          setErrorMessage(result);
+        } else {
+          const { favourite, song } = result;
+          setIsFavourite(favourite);
+          setSongWithLyrics(song);
+        }
       });
     }
-    const lastSong = getLastChosenSong();
-    setSongWithLyrics(null);
-    setErrorMessage('');
-    const buildSongQuery = (): SongQuery => {
-      return {
-        username: getUserId(),
-        song: {
-          title: lastSong.title,
-          artist: lastSong.artists[0],
-          album: lastSong.album['title'],
-          spotifyUri: lastSong.spotifyUri,
-          photoUrl: lastSong.album.albumBigCoverUrl,
-          releaseYear: Number(lastSong.album.releaseDate.split('-')[0]),
-        },
-      };
-    };
-
-    setCheckedSong(lastSong);
-
-    fetchSong(buildSongQuery()).then(result => {
-      if (result.status === 404) {
-        setErrorMessage(
-          "Unfortunetly we couldn't find lyrics for this song. Please try with other version if possible."
-        );
-      }
-      if (result.status === 500) {
-        setErrorMessage('Not cool. Number of this error is 500...');
-      }
-      if (typeof result === 'string') {
-        setErrorMessage(result);
-      } else {
-        const { favourite, song } = result;
-        setIsFavourite(favourite);
-        setSongWithLyrics(song);
-      }
-    });
   }, [JSON.stringify(checkedSong)]);
 
   return (
