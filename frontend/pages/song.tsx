@@ -15,6 +15,7 @@ import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../reques
 import { getLastChosenSong, getUserId, setLastChosenSong } from '../utils/localStorage';
 import { playSong, getNowPlaying } from '../requests/spotify/player';
 import { fetchSpotify } from '../requests/spotify/fetchSpotify';
+import { AddToFavorite } from '../components/buttons/AddToFavorite';
 
 const SongView: React.FC<void> = () => {
   const [songWithLyrics, setSongWithLyrics] = useState<SongInternal>(null);
@@ -104,13 +105,7 @@ const SongView: React.FC<void> = () => {
               icon={<CaretRightOutlined />}
               onClick={() => playSong(checkedSong)}
             />
-            <Button
-              className="song-button"
-              shape="circle"
-              size="large"
-              style={{ marginLeft: 12, boxShadow: '2px 2px 6px #181818' }}
-              icon={isFavourite ? <HeartFilled /> : <HeartOutlined />}
-            />
+            <AddToFavorite song={songWithLyrics} isFavourite={isFavourite} setIsFavourite={setIsFavourite}/>
           </div>
 
           <LyricsContainer song={songWithLyrics} errorMessage={errorMessage} />
