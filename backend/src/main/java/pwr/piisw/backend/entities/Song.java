@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Song {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     String title;
     String artist;

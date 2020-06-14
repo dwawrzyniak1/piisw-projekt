@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pwr.piisw.backend.dtos.song.SongBasicInfo;
 import pwr.piisw.backend.entities.Checked;
 import pwr.piisw.backend.entities.Favourite;
-import pwr.piisw.backend.entities.Song;
 import pwr.piisw.backend.entities.User;
 import pwr.piisw.backend.exceptions.UserNotFoundException;
 import pwr.piisw.backend.repositories.CheckedRepository;
@@ -34,7 +33,7 @@ public class UserService {
     @Transactional
     public List<SongBasicInfo> getFavouritesPaginated(String username, Pageable pageable) {
         User user = getUserOrThrow(username);
-        return favouritesRepository.findAllByUserOrderByCreatedAtDesc(user, pageable).stream()
+        return favouritesRepository.findAllByUser(user, pageable).stream()
                 .map(Favourite::getFavouriteSong)
                 .map(SongBasicInfo::new)
                 .collect(Collectors.toList());
@@ -43,7 +42,7 @@ public class UserService {
     @Transactional
     public List<SongBasicInfo> getLatestCheckedSongsPaginated(String username, Pageable pageable) {
         User user = getUserOrThrow(username);
-        return checkedRepository.findAllByUserOrderByUpdatedAtDesc(user, pageable).stream()
+        return checkedRepository.findAllByUser(user, pageable).stream()
                 .map(Checked::getSong)
                 .map(SongBasicInfo::new)
                 .collect(Collectors.toList());

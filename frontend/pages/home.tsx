@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import get20lastPlayedSongs from '../requests/spotify/personalSongs';
 import { getUserInfo } from '../requests/spotify/user';
 import Song from '../models/Song';
-import { Layout, Card, Alert } from 'antd';
+import { Alert, Card, Layout } from 'antd';
 import Colors from '../constants/colors';
 import NavigationBar from '../components/topBar/NavigationBar';
-import { saveToLocalStorage, getUserId } from '../utils/localStorage';
+import { getUserId, saveToLocalStorage } from '../utils/localStorage';
 import { USER_ID_KEY } from '../constants/spotify';
 
 const Home: React.FC = () => {

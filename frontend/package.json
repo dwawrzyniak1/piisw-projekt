@@ -11,6 +11,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "@types/chart.js": "^2.9.21",
     "@types/enzyme": "^3.10.5",
     "@types/lodash": "^4.14.155",

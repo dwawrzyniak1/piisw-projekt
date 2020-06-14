@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CheckedRepository extends PagingAndSortingRepository<Checked, Long> {
-    List<Checked> findAllByUserOrderByUpdatedAtDesc(User user, Pageable pageable);
+    List<Checked> findAllByUser(User user, Pageable pageable);
 
     Optional<Checked> findByUserAndSong(User user, Song song);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FavouritesRepository extends PagingAndSortingRepository<Favourite, Long> {
-    List<Favourite> findAllByUserOrderByCreatedAtDesc(User user, Pageable pageable);
+    List<Favourite> findAllByUser(User user, Pageable pageable);
 
     Optional<Favourite> findByFavouriteSongAndUser(Song song, User user);
 }
