@@ -3,8 +3,8 @@ import { SongWithLyrics } from '../../requests/backend/schema';
 import FullscreenSpinner from '../loading/FullscreenSpinner';
 
 interface LyricsProps {
-  song: SongWithLyrics,
-  errorMessage?: string
+  song: SongWithLyrics;
+  errorMessage?: string;
 }
 
 export const LyricsContainer: React.FC<LyricsProps> = props => {
@@ -14,14 +14,14 @@ export const LyricsContainer: React.FC<LyricsProps> = props => {
   if (errorMessage !== '') {
     content = errorMessage;
   } else if (song == null) {
-    content = <FullscreenSpinner/>
+    content = <FullscreenSpinner />;
   } else {
     content = <p>{song.lyrics}</p>;
   }
 
   return (
     <>
-      <div className='lyrics-container'>
+      <div className="lyrics-container" style={errorMessage ? { color: 'red' } : {}}>
         {content}
       </div>
 
@@ -33,10 +33,10 @@ export const LyricsContainer: React.FC<LyricsProps> = props => {
           z-index: 1;
           position: relative;
           left: 300px;
-          top: 100px;
+          top: 170px;
           -webkit-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
           -moz-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
-           box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
         }
       `}</style>
     </>

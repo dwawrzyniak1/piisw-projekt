@@ -1,8 +1,12 @@
 import React from 'react';
+import Router from 'next/router';
 import { Layout, Menu } from 'antd';
+
 import Colors from '../../constants/colors';
 import { playSong } from '../../requests/spotify/player';
 import SongDropdownSearch from '../../components/searching/SongDropdownSearch';
+import { setLastChosenSong } from '../../utils/localStorage';
+import { APP_SONG_URL } from '../../constants/urls';
 
 type Props = { selectedMenuItem: number };
 const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
@@ -62,7 +66,12 @@ const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
           </Menu.Item>
         </Menu>
         <div style={{ marginLeft: '200px', float: 'left' }}>
-          <SongDropdownSearch onSelectCallback={playSong} />
+          <SongDropdownSearch
+            onSelectCallback={song => {
+              setLastChosenSong(song);
+              Router.push(APP_SONG_URL.replace('http:', ''));
+            }}
+          />
         </div>
       </Header>
       {/*<div>*/}
