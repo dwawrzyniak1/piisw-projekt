@@ -80,7 +80,7 @@ const Popular: React.FC = () => {
   return (
     <body style={{ backgroundColor: colors.backgroundColor }}>
       <div>
-        <NavigationBar />
+        <NavigationBar selectedMenuItem={3} />
         <div style={{ margin: '4em' }}>
           <Bar data={data} options={options} />
         </div>

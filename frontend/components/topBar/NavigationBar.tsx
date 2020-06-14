@@ -4,7 +4,10 @@ import Colors from '../../constants/colors';
 import { playSong } from '../../requests/spotify/player';
 import SongDropdownSearch from '../../components/searching/SongDropdownSearch';
 
-const NavigationBar = (): JSX.Element => {
+type Props = { selectedMenuItem: number };
+const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
+  const SELECTED_MENU_ITEM_STYLE = { color: 'white', borderColor: 'white' };
+
   const { Header } = Layout;
 
   return (
@@ -36,7 +39,7 @@ const NavigationBar = (): JSX.Element => {
         </div>
         <Menu
           mode="horizontal"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[selectedMenuItem.toString()]}
           style={{
             backgroundColor: Colors.primaryColor,
             marginLeft: '140px',
@@ -44,9 +47,19 @@ const NavigationBar = (): JSX.Element => {
             float: 'left',
           }}
         >
-          <Menu.Item key="1">Last played</Menu.Item>
-          <Menu.Item key="2">Favorites</Menu.Item>
-          <Menu.Item key="3">Statistics</Menu.Item>
+          <Menu.Item key={1} style={selectedMenuItem === 1 ? SELECTED_MENU_ITEM_STYLE : {}}>
+            Last played
+          </Menu.Item>
+          <Menu.Item
+            key={2}
+            style={selectedMenuItem === 2 ? SELECTED_MENU_ITEM_STYLE : {}}
+            color="red"
+          >
+            Favorites
+          </Menu.Item>
+          <Menu.Item key={3} style={selectedMenuItem === 3 ? SELECTED_MENU_ITEM_STYLE : {}}>
+            Statistics
+          </Menu.Item>
         </Menu>
         <div style={{ marginLeft: '200px', float: 'left' }}>
           <SongDropdownSearch onSelectCallback={playSong} />

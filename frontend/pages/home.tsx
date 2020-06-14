@@ -122,7 +122,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      <NavigationBar />
+      <NavigationBar selectedMenuItem={1} />
       <Layout className="layout" style={{ width: '100%' }}>
         <Content
           style={{
