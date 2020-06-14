@@ -1,14 +1,22 @@
 import React from 'react';
 import FullscreenSpinner from '../loading/FullscreenSpinner';
 import { SongInternal } from '../../models/SongInternal';
-
 interface LyricsProps {
-  song: SongInternal,
-  errorMessage?: string
+  song: SongInternal;
+  errorMessage?: string;
 }
 
 export const LyricsContainer: React.FC<LyricsProps> = props => {
   const { song, errorMessage } = props;
+
+  const formatLyrics = (lyrics: string) => {
+    return lyrics.split('\n').map(sentence => (
+      <span>
+        {sentence}
+        <br />
+      </span>
+    ));
+  };
 
   let content;
   if (errorMessage !== '') {
@@ -16,7 +24,7 @@ export const LyricsContainer: React.FC<LyricsProps> = props => {
   } else if (song == null) {
     content = <FullscreenSpinner />;
   } else {
-    content = <p>{song.lyrics}</p>;
+    content = <p>{formatLyrics(song.lyrics)}</p>;
   }
 
   return (

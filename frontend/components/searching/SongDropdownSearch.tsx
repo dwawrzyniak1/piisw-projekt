@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Input, AutoComplete } from 'antd';
+import Router from 'next/router';
 import Link from 'next/link';
 import _ from 'lodash';
 
@@ -19,26 +20,26 @@ const searchResult = async (
   }
   return [
     songs.map((song: Song, index: number) => {
-      const label = (
-        <Link href="/song">
-          <div
-            key={index}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <span style={{ marginTop: 'auto', marginBottom: 'auto' }}>
-              <b>{song.title}</b>
-              <br />
-              {` ${song.artists.join(', ')}`}
-            </span>
-            <span>
-              <img src={song.album.albumSmallCoverUrl} width={48} />
-            </span>
-          </div>
-        </Link>
+      const innerLabel = (
+        <div
+          key={index}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span style={{ marginTop: 'auto', marginBottom: 'auto' }}>
+            <b>{song.title}</b>
+            <br />
+            {` ${song.artists.join(', ')}`}
+          </span>
+          <span>
+            <img src={song.album.albumSmallCoverUrl} width={48} />
+          </span>
+        </div>
       );
+      const label =
+        Router.pathname === '/song' ? innerLabel : <Link href="/song">{innerLabel}</Link>;
 
       return { label, value: JSON.stringify(song) };
     }),
@@ -56,7 +57,7 @@ const SongDropdownSearch = ({ onSelectCallback }: Props) => {
 
   const onSelect = (value: string) => {
     const selectedSong: Song = JSON.parse(value);
-    setQuery(selectedSong.title);
+    setQuery('');
     onSelectCallback(selectedSong);
   };
 

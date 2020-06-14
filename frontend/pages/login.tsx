@@ -7,6 +7,7 @@ import { extractAuthDataFromUrl } from '../utils/url';
 import { saveToLocalStorage, getAccessToken, getUserId } from '../utils/localStorage';
 import FullscreenSpinner from '../components/loading/FullscreenSpinner';
 import Colors from '../constants/colors';
+import { fetchBackend } from '../requests/backend/fetchBackend';
 import { getUserInfo } from '../requests/spotify/user';
 
 const Login: React.FC = () => {
@@ -29,6 +30,7 @@ const Login: React.FC = () => {
   useEffect(() => {
     (async () => {
       gatherUserInfo();
+      fetchBackend('/user/register', 'POST', getUserId());
     })();
   }, []);
 

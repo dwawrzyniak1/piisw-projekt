@@ -6,9 +6,10 @@ import Link from 'next/link';
 import Colors from '../../constants/colors';
 import SongDropdownSearch from '../../components/searching/SongDropdownSearch';
 import { setLastChosenSong } from '../../utils/localStorage';
+import Song from '../../models/Song';
 
-type Props = { selectedMenuItem: number };
-const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
+type Props = { selectedMenuItem: number; dropdownSearchCallback?: (song: Song) => void };
+const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX.Element => {
   const SELECTED_MENU_ITEM_STYLE = { color: 'white', borderColor: 'white' };
 
   const { Header } = Layout;
@@ -68,10 +69,11 @@ const NavigationBar = ({ selectedMenuItem }: Props): JSX.Element => {
         <div style={{ marginLeft: '200px', float: 'left' }}>
           <SongDropdownSearch
             onSelectCallback={song => {
-              setLastChosenSong(song);
-              Router.prefetch('/song');
-              Router.replace('/song');
-              // Router.replace(APP_SONG_URL.replace('http:', ''));
+              if (dropdownSearchCallback) {
+                dropdownSearchCallback(song);
+              } else {
+                setLastChosenSong(song);
+              }
             }}
           />
         </div>
