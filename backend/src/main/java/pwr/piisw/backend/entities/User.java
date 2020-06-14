@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Set;
 
 @Data
 @Entity
@@ -18,6 +16,4 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class User {
     @Id @NonNull String username;
-    @OneToMany(mappedBy = "user")
-    Set<Favourite> favourites;
 }

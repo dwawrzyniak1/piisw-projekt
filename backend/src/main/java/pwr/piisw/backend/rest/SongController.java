@@ -13,6 +13,7 @@ import pwr.piisw.backend.exceptions.CannotFindSongWithinGeniusResources;
 import pwr.piisw.backend.services.SongCrudService;
 import pwr.piisw.backend.services.SongRetrievalService;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
@@ -33,6 +34,7 @@ public class SongController {
             @ApiResponse(responseCode = "500", description = "Exception during Genius scraping")
     })
     @PostMapping
+    @Transactional
     public ResponseEntity<SongDetailsResponse> checkSongDetails(@RequestBody SongDetailsRequest songDetailsRequest) {
         Optional<Song> song = retrievalService.getSong(songDetailsRequest.getSong());
         song.ifPresent(s -> crudService.markAsChecked(s, songDetailsRequest.getUsername()));
