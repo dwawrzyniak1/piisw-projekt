@@ -57,7 +57,9 @@ const NavigationBar = ({ selectedMenuItem, dropdownSearchCallback }: Props): JSX
             </Link>
           </Menu.Item>
           <Menu.Item key={2} style={selectedMenuItem === 2 ? SELECTED_MENU_ITEM_STYLE : {}}>
-            <a>Favorites</a>
+            <Link href="/favorites">
+              <a>Favorites</a>
+            </Link>
           </Menu.Item>
 
           <Menu.Item key={3} style={selectedMenuItem === 3 ? SELECTED_MENU_ITEM_STYLE : {}}>
