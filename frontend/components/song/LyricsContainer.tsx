@@ -3,8 +3,8 @@ import FullscreenSpinner from '../loading/FullscreenSpinner';
 import { SongInternal } from '../../models/SongInternal';
 
 interface LyricsProps {
-  song: SongInternal,
-  errorMessage?: string
+  song: SongInternal;
+  errorMessage?: string;
 }
 
 export const LyricsContainer: React.FC<LyricsProps> = props => {
