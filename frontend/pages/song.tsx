@@ -77,7 +77,7 @@ const SongView: React.FC<void> = () => {
           setCheckedSong(song);
         }}
       />
-      <div className="song-view-container">
+      <div  style={{ marginTop: '20px' }} className="song-view-container">
         <SongContainer backgroundUlr={checkedSong?.album.albumBigCoverUrl}>
           <div
             style={{
@@ -86,11 +86,11 @@ const SongView: React.FC<void> = () => {
               top: 5,
             }}
           >
-            <h1 className="song-title">{checkedSong?.title}</h1>
-            <h2 className="song-artist">{checkedSong?.artists[0]}</h2>
-            <h3 className="song-album" style={checkedSong ? { opacity: 1 } : { opacity: 0 }}>
+            <span className="song-title">{checkedSong?.title}</span>
+            <span className="song-artist">{checkedSong?.artists[0]}</span>
+            <span className="song-album" style={checkedSong ? { opacity: 1 } : { opacity: 0 }}>
               {checkedSong?.album.title} ({checkedSong?.album.releaseDate.split('-')[0]})
-            </h3>
+            </span>
           </div>
 
           <div className="song-operations">
@@ -98,6 +98,7 @@ const SongView: React.FC<void> = () => {
               className="song-button"
               shape="circle"
               size="large"
+              style={{ boxShadow: '2px 2px 6px #181818' }}
               icon={<CaretRightOutlined />}
               onClick={() => playSong(checkedSong)}
             />
@@ -105,7 +106,7 @@ const SongView: React.FC<void> = () => {
               className="song-button"
               shape="circle"
               size="large"
-              style={{ marginLeft: 5 }}
+              style={{ marginLeft: 12, boxShadow: '2px 2px 6px #181818' }}
               icon={isFavourite ? <HeartFilled /> : <HeartOutlined />}
             />
           </div>
@@ -122,6 +123,8 @@ const SongView: React.FC<void> = () => {
           overflow: hidden;
           text-overflow: ellipsis;
           width: 580px;
+          display: block;
+          text-shadow: 2px 2px 6px #181818;
         }
 
         .song-artist {
@@ -131,6 +134,8 @@ const SongView: React.FC<void> = () => {
           overflow: hidden;
           text-overflow: ellipsis;
           width: 580px;
+          display: block;
+          text-shadow: 2px 2px 6px #181818;
         }
 
         .song-album {
@@ -139,6 +144,9 @@ const SongView: React.FC<void> = () => {
           overflow: hidden;
           text-overflow: ellipsis;
           width: 580px;
+          display: block;
+          text-shadow: 2px 2px 6px #181818;
+          font-style: italic;
         }
 
         .song-operations {
@@ -149,6 +157,18 @@ const SongView: React.FC<void> = () => {
 
         .song-button {
           margin-left: 20px;
+        }
+
+        :global(.ant-btn:hover) {
+          color: white;
+          background-color: #1db954;
+          border-color: #737373;
+        }
+
+        :global(.ant-btn:focus) {
+          color: white;
+          background-color: #1db954;
+          border-color: #737373;
         }
 
         .song-view-container {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card } from 'antd';
 import { SongInternal } from '../../models/SongInternal';
 import { CaretRightOutlined } from '@ant-design/icons/lib';
+import Colors from '../../constants/colors';
 
 interface SongListProps {
   songs: SongInternal[];
@@ -89,6 +90,23 @@ export const SongList: React.FC<SongListProps> = ({ songs }) => {
           </li>
         </Card>
       ))}
+      <style jsx>{`
+        :global(.ant-btn:hover) {
+          color: white;
+          background-color: #1db954;
+          border-color: #737373;
+        }
+
+        :global(.ant-btn:focus) {
+          color: white;
+          background-color: #1db954;
+          border-color: #737373;
+        }
+
+        :global(.ant-card:hover) {
+          background-color: #404040 !important;
+        }
+      `}</style>
     </div>
   );
 };
