@@ -1,34 +1,33 @@
 import React from 'react';
 
 interface ContainerProps {
-  backgroundUlr: string
+  backgroundUlr: string;
 }
 
 export const SongContainer: React.FC<ContainerProps> = props => {
   const { backgroundUlr, children } = props;
   return (
     <>
-      <div className='song-container'>
-        {children}
-      </div>
+      <div className="song-container">{children}</div>
 
       <style jsx>{`
         .song-container {
           height: 600px;
           width: 600px;
           margin: auto;
-          
+
           display: block;
           position: relative;
-          
+
           background-image: url(${backgroundUlr});
-          
+          background-repeat: round;
+
           -webkit-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
           -moz-box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
-           box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 9px 10px 35px 0px rgba(0, 0, 0, 0.5);
         }
         .song-container::before {
-          content: "";
+          content: '';
           background-color: rgba(100, 95, 94, 0.75);
           height: 100%;
           width: 100%;
@@ -38,7 +37,6 @@ export const SongContainer: React.FC<ContainerProps> = props => {
     </>
   );
 };
-
 
 // .song-container::after {
 //   content: "";
