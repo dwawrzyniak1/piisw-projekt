@@ -47,6 +47,8 @@ const Home: React.FC = () => {
               marginBottom: '8px',
               maxHeight: '10%',
               border: 0,
+              color: 'white',
+              backgroundColor: '#333333',
             }}
             bodyStyle={{
               padding: 0,
@@ -130,6 +132,9 @@ const Home: React.FC = () => {
             maxHeight: 'auto',
           }}
         >
+          <h2 style={{ color: 'white', marginTop: '20px', marginLeft: '5%', fontSize: '21px' }}>
+            20 last played songs:
+          </h2>
           <div>{renderSongs(lastSongs)}</div>
         </Content>
         {lastSongsLoadError !== '' ? (
