@@ -20,8 +20,8 @@ public class SongRetrievalService {
     private final Supervisor supervisor;
 
     @Transactional // lyrics are stored as lob in db
-    public Optional<Song> getSong(SongQueryInfo songQueryInfo) throws InterruptedException {
-        return supervisor.performSupervised(songQueryInfo, () -> {
+    public Optional<Song> getSong(SongQueryInfo songQueryInfo) {
+        return supervisor.performSupervised(() -> {
             Optional<Song> storedSong = songRepository.findByTitleAndArtist(songQueryInfo.getTitle(), songQueryInfo.getArtist());
             return storedSong.isPresent()
                     ? storedSong
