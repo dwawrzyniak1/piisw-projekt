@@ -24,7 +24,10 @@ const Popular: React.FC = () => {
     const loadedSongs: { count: number; song: SongInternal }[] = await res.json();
 
     // tslint:disable-next-line: max-line-length
-    const loadedSongsPrepared = loadedSongs.sort((s1, s2) => s2.count - s1.count).slice(0, 5); // SORTING
+    const loadedSongsPrepared = loadedSongs
+      .sort((s1, s2) => s2.count - s1.count)
+      .slice(0, 5)
+      .filter(s => s.count !== 0); // SORTING
     setPopularSongs(loadedSongsPrepared);
   };
 

@@ -25,9 +25,13 @@ const SongView: React.FC<void> = () => {
   useEffect(() => {
     if (checkedSong === null || loaded) {
       if (Router.query.now) {
-        getNowPlaying().then(res => {
-          setLastChosenSong(res[0]);
-        });
+        getNowPlaying()
+          .then(res => {
+            setLastChosenSong(res[0]);
+          })
+          .catch(res => {
+            setLastChosenSong(undefined);
+          });
       }
       const lastSong = getLastChosenSong();
       setSongWithLyrics(null);
