@@ -39,7 +39,11 @@ const searchResult = async (
         </div>
       );
       const label =
-        Router.pathname === '/song' ? innerLabel : <Link href="/song">{innerLabel}</Link>;
+        Router.pathname === '/song' && !Router.query.now ? (
+          innerLabel
+        ) : (
+          <Link href="/song">{innerLabel}</Link>
+        );
 
       return { label, value: JSON.stringify(song) };
     }),

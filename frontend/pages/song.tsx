@@ -11,10 +11,8 @@ import { SongInternal } from '../models/SongInternal';
 import Colors from '../constants/colors';
 import Router from 'next/router';
 
-import { fetchCheckedByUser, fetchUserFavourites, registerUser } from '../requests/backend/user';
 import { getLastChosenSong, getUserId, setLastChosenSong } from '../utils/localStorage';
 import { playSong, getNowPlaying } from '../requests/spotify/player';
-import { fetchSpotify } from '../requests/spotify/fetchSpotify';
 import { AddToFavorite } from '../components/buttons/AddToFavorite';
 
 const SongView: React.FC<void> = () => {
@@ -22,9 +20,10 @@ const SongView: React.FC<void> = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [checkedSong, setCheckedSong] = useState<Song>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (checkedSong === null) {
+    if (checkedSong === null || loaded) {
       if (Router.query.now) {
         getNowPlaying().then(res => {
           setLastChosenSong(res[0]);
@@ -63,18 +62,19 @@ const SongView: React.FC<void> = () => {
         if (typeof result === 'string') {
           setErrorMessage(result);
         } else {
+          setLoaded(true);
           const { favourite, song } = result;
           setIsFavourite(favourite);
           setSongWithLyrics(song);
         }
       });
     }
-  }, [JSON.stringify(checkedSong)]);
+  }, [JSON.stringify(checkedSong), Router.query.now]);
 
   return (
     <>
       <NavigationBar
-        selectedMenuItem={4}
+        selectedMenuItem={Router.query.now ? 4 : 5}
         dropdownSearchCallback={song => {
           setLastChosenSong(song);
           setCheckedSong(song);
@@ -105,7 +105,11 @@ const SongView: React.FC<void> = () => {
               icon={<CaretRightOutlined />}
               onClick={() => playSong(checkedSong)}
             />
-            <AddToFavorite song={songWithLyrics} isFavourite={isFavourite} setIsFavourite={setIsFavourite}/>
+            <AddToFavorite
+              song={songWithLyrics}
+              isFavourite={isFavourite}
+              setIsFavourite={setIsFavourite}
+            />
           </div>
 
           <LyricsContainer song={songWithLyrics} errorMessage={errorMessage} />

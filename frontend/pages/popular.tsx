@@ -11,7 +11,7 @@ const Popular: React.FC = () => {
   const FONT_COLOR = 'rgba(255, 255, 255, 0.9)';
   const GRID_COLOR = 'rgba(255, 255, 255, 0.2)';
 
-  const [lastSongs, setLastSongs] = useState<{ count: number; song: SongInternal }[]>([]);
+  const [popularSongs, setPopularSongs] = useState<{ count: number; song: SongInternal }[]>([]);
   const [lastSongsLoadError, setLastSongsLoadError] = useState<string>('');
   useEffect(() => {
     (async () => {
@@ -23,15 +23,16 @@ const Popular: React.FC = () => {
     const res = await fetchBackend('/statistics/checked', 'GET');
     const loadedSongs: { count: number; song: SongInternal }[] = await res.json();
 
+    // tslint:disable-next-line: max-line-length
     const loadedSongsPrepared = loadedSongs.sort((s1, s2) => s2.count - s1.count).slice(0, 5); // SORTING
-    setLastSongs(loadedSongsPrepared);
+    setPopularSongs(loadedSongsPrepared);
   };
 
   const data = {
-    labels: lastSongs.map(s => s.song.title),
+    labels: popularSongs.map(s => s.song.title),
     datasets: [
       {
-        data: lastSongs.map((s, i) => s.count),
+        data: popularSongs.map((s, i) => s.count),
         backgroundColor: chartColors.backgroundColor,
         borderColor: chartColors.borderColor,
         borderWidth: 1,
@@ -67,7 +68,7 @@ const Popular: React.FC = () => {
     tooltips: {
       callbacks: {
         title: v => {
-          const tooltipSong: { count: number; song: SongInternal } = lastSongs.filter(s => {
+          const tooltipSong: { count: number; song: SongInternal } = popularSongs.filter(s => {
             // return song.timesChecked === Number(v[0].value) && song.title === v[0].label;
             return s.song.title === v[0].label;
           })[0];
@@ -86,7 +87,7 @@ const Popular: React.FC = () => {
       <div>
         <NavigationBar selectedMenuItem={3} />
         <div style={{ marginLeft: '12vw', marginRight: '12vw', marginTop: '3vw' }}>
-          <Bar data={data} options={options} />
+          {popularSongs.length ? <Bar data={data} options={options} /> : ''}
         </div>
       </div>
       <style jsx global>{`
