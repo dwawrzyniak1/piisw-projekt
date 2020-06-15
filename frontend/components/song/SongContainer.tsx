@@ -18,6 +18,7 @@ export const SongContainer: React.FC<ContainerProps> = props => {
 
           display: block;
           position: relative;
+          cursor: pointer;
 
           background-image: url(${backgroundUlr});
           background-repeat: round;
