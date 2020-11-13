@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   postgres-db:
-    image: postgres:latest
+    image: postgres:12-alpine
     container_name: postgres-db
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -29,5 +29,12 @@ services:
       - postgres-db
     links:
       - postgres-db
+  reactapp:
+    image: reactapp:latest
+    container_name: reactapp
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
 volumes:
   postgres-data:
